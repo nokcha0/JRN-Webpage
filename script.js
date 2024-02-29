@@ -70,7 +70,7 @@ function openWindow(id) {
         makeWindowActive(id);
     }
 }
-function closeWindwow(id) {
+function closeWindow(id) {
 	$("#window" + id).addClass("closed");
 	$("#minimPanel" + id).addClass("closed");
 }
@@ -168,7 +168,7 @@ $(document).ready(function(){
     });
 	
     $(".winclose").click(function(){	
-		closeWindwow($(this).parent().parent().attr("data-id"));
+		closeWindow($(this).parent().parent().attr("data-id"));
     });	
 
     $(".winminimize").click(function(){		

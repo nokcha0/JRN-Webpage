@@ -33,7 +33,7 @@
 
 </head>
 <body>
-    <a href="../../index.html" class="back-button"></a>
+    <a href="../projectslide/project.html" class="back-button"></a>
 
     <h1>click race</h1>
     <h2>by juniorn</h2>
@@ -60,8 +60,9 @@
             }
         });
         window.onload = function() {
-            if(localStorage.getItem('darkMode') === 'true') {
-                document.getElementById('darkMode').checked = true;
+            // Set the checkbox to be checked by default
+            document.getElementById('darkMode').checked = true;
+            if(localStorage.getItem('darkMode') !== 'false') {
                 document.body.style.backgroundColor = 'black';
                 document.body.style.color = 'white';
                 var buttons = document.querySelectorAll('button');
@@ -73,5 +74,6 @@
             }
         };
     </script>
+    
 </body>
 </html>
