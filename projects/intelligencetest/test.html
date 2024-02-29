@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intelligence Test</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="../../CSS/back.css">  
+
+</head>
+<body>
+    
+    <a href="../../index.html" class="back-button"></a>
+
+    <div id="score-container">
+        <h2 id="scoreTxt">Score: 0</h2>
+    </div>
+
+    <div class="app">
+
+        <div id="intro">
+            <h1>Intelligence Test</h1>
+            <h2 id="app h2">By Juniorn</h2>
+            <button id="next-btn" onclick="startQuiz()">></button>
+        </div>
+
+        <div id="quiz-container" style="display: none;">
+            <div class="quiz">
+                <img id="quiz-image" alt="Quiz Image">
+                <h2 id="question"></h2>
+                <form id="quiz-form">
+                    <div class="field">
+                        <input id="answer" type="text" placeholder="Your answer here">
+                        <div class="line"></div>
+                    </div>
+                    <button id="quiz-next-btn" type="button" style="display: block;">></button>
+                </form>
+                <h2 id="result"></h2>
+            </div>
+        </div>
+
+        <div id="end-page" style="display: none;">
+            <h1>Intelligence Test Ended</h1>
+            <h2 id="score" style="display: none;"></h2>
+            <h2 id="final-message"></h2>
+            <div id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="--value: 0"></div>
+            <div id="button-container">
+                <button id="restart-btn" onclick="restartQuiz()">Restart</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

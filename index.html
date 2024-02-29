@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>장준현</title>
+
+
+		<link rel="stylesheet" type="text/css" href="CSS/icons.css" />
+		<link rel="stylesheet" type="text/css" href="CSS/taskbar.css" />
+		<link rel="stylesheet" type="text/css" href="CSS/windows.css" />
+		<link rel="stylesheet" type="text/css" href="CSS/clock.css" />
+
+
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+		
+		
+		<script src="script.js"></script>
+
+	
+
+	</head>
+<body>
+    <div id="desktop">
+
+		<div class="container">
+			<div class="clock">
+				<div id="day"></div>
+				<div class="wrapper">
+					<div id="time"></div>
+					<div id="midday"></div>
+				</div>
+			</div>
+		</div>
+
+        <div class="window closed" data-title="Welcome.txt">
+            <h1>장준현의 웹페이지</h1>
+            <br>
+            <p>Welcome.</p>
+            <br>
+            <p>You will find Juniorn's HTML/CSS/JS based stuff here.</p>
+            <br>
+            <p>심심해서 만듬.</p>
+            <br>
+            <hr />
+            <p>Created on January 19th, 2024.</p>
+        </div>
+
+		<div class="window closed" data-title="Intelligence Test">
+			<br>
+			<a href="Projects/IntelligenceTest/test.html">How dumb are you?</a> <br><br>
+			<p>First project to get familiar with Javascript. <br><br></p>
+			<hr />
+			<p>Created on Jan 19 2024.</p>
+		</div>
+
+		<div class="window closed" data-title="Encrypter and Decrypter">
+			<br>
+			<a href="Projects/EncryptDecrypt/encdec.html">Encrypt and Decrypt</a> <br><br>
+			<p>For facilitating Nigunba Encrypting and Decrypting.</p>
+			<hr />
+			<p>C Code converted to JS on Jan 21 2024.</p>
+		</div>
+
+		<div class="window closed" data-title="Click Race">
+			<br>
+			<a href="Projects/click/start.html">click race</a> <br><br>
+			<p>click click click</p>
+			<hr />
+			<p>Feb 11 2024</p>
+		</div>
+
+		<div class="window closed" data-title="Feifei Type">
+			<br>
+			<a href="Projects/feifeitype/feifeitype.html">Feifei Type</a> <br><br>
+			<p>type type type</p>
+			<hr />
+			<p>Feb 16 2024</p>
+		</div>
+
+		<div class="window closed" data-title="타자 변환">
+			<br>
+			<a href="Projects/타자변환/taja.html">한/영 타자 변환</a> <br><br>
+			<p>dhoaksemfdjTdmfRk</p>
+			<hr />
+			<p>Feb 22 2024</p>
+		</div>
+
+		<div class="window closed" data-title="Log">
+			<br>
+			<p>2024</p>
+			<hr />
+			<p>01/19 Website v1. Project Intelligence Test </p>
+			<p>01/21 Project Nigunba EncDec. Added ChangeBg</p>
+			<p>02/11 Project Click Race </p>
+			<p>02/16 Project Feifei Type </p>
+			<p>02/22 Website v2. Project 타자변환. </p>
+			<p>02/24 Website v3. Added Log. Added Clock. Added Back Button for all proj.</p>
+			<p>02/27 Project TTS. Project RaceAI prototype. </p>
+			<p>02/28 Project ColorBlind Test </p>
+
+
+
+		</div>
+
+		<div class="window closed" data-title="Text To Speech">
+			<br>
+			<a href="Projects/TTS/tts.html">Text To Speech</a> <br><br>
+			<p>TTS</p>
+			<hr />
+			<p>Feb 27 2024</p>
+		</div>
+
+		<div class="window closed" data-title="RaceAI">
+			<br>
+			<a href="Projects/RaceAI/RaceAI.html">RaceAI</a> <br><br>
+			<p>AI for race recognition. Prototype, not enough database to train AI</p>
+			<hr />
+			<p>Feb 27 2024</p>
+		</div>
+
+		<div class="window closed" data-title="ColorBlind Test">
+			<br>
+			<a href="Projects/colorblindtest/colorblindtest.html">ColorBlind Test</a> <br><br>
+			<p>Test your eyeballs</p>
+			<hr />
+			<p>Feb 28 2024</p>
+		</div>
+		
+		<div id="taskbar">		
+		</div>
+		
+		<div class="icons">
+			<div class="icon">
+				<a class="openWindow" data-id="0">
+					<img src="bg/icons/file.png"> 
+					<span>Welcome</span>
+				</a>
+			</div>
+			<div class="icon">
+				<a class="openWindow" data-id="1">
+					<img src="bg/icons/proj.png"> 
+					<span>Intelligence Test</span>
+				</a>
+			</div>
+			<div class="icon">
+				<a class="openWindow" data-id="2">
+					<img src="bg/icons/proj.png">
+					<span>Encrypter and Decrypter</span>
+				</a>
+			</div>
+			<div class="icon">
+				<a class="openWindow" data-id="3">
+					<img src="bg/icons/proj.png">
+					<span>Click Race</span>
+				</a>
+			</div>
+
+			<div class="icon">
+				<a id="changeBg">
+					<img src="bg/icons/random.png">
+					<span>Change Background</span>
+				</a>
+			</div>
+
+			<div class="icon">
+				<a class="openWindow" data-id="4">
+					<img src="bg/icons/proj.png"> 
+					<span>Feifei Type</span>
+				</a>
+			</div>
+
+			<div class="icon">
+				<a class="openWindow" data-id="5">
+					<img src="bg/icons/proj.png">
+					<span>타자변환</span>
+				</a>
+			</div>
+			<div class="icon">
+				<a class="openWindow" data-id="6">
+					<img src="bg/icons/proj.png">
+					<span>Log</span>
+				</a>
+			</div>
+
+			<div class="icon">
+				<a class="openWindow" data-id="7">
+					<img src="bg/icons/proj.png">
+					<span>Text To Speech</span>
+				</a>
+			</div>
+
+			<div class="icon">
+				<a class="openWindow" data-id="8">
+					<img src="bg/icons/proj.png">
+					<span>RaceAI</span>
+				</a>
+			</div>
+
+			<div class="icon">
+				<a class="openWindow" data-id="9">
+					<img src="bg/icons/proj.png">
+					<span>ColorBlind Test</span>
+				</a>
+			</div>
+		</div>
+
+
+		
+		
+		
+		
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(#849ad6, #2d1c35);
+}
+::selection{
+  color: #fff;
+  background: #4671EA;
+}
+.wrapper{
+  width: 470px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 25px 25px 30px;
+  box-shadow: 8px 8px 10px rgba(0,0,0,0.06);
+  margin: 20px;
+  float: left;
+}
+
+h2 {
+  margin-top: 20px;
+}
+/* Buttons */
+button {
+  display: inline-block;
+  padding: 12px 24px;  
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  background: #4671EA;
+  
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #3862c9;
+}
+
+button:active {
+  background: #2e58b3; 
+}
+
+/* Copy buttons */
+.encode-copy,
+.decode-copy {
+  width: 100%;
+  
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+.encode-copy {
+  background: #6b91f0;
+}
+
+.encode-copy:hover {
+  background: #5c82e6; 
+}
+
+.decode-copy {
+  background: #78ace2;  
+}
+
+.decode-copy:hover {
+  background: #639dd9;
+}
+
+
+.wrapper h2{
+  color: #4671EA;
+  font-size: 28px;
+  text-align: center;
+}
+.wrapper textarea{
+  width: 100%;
+  resize: none;
+  height: 59px;
+  outline: none;
+  padding: 15px;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 5px;
+  max-height: 330px;
+  caret-color: #4671EA;
+  border: 1px solid #bfbfbf;
+}
+textarea::placeholder{
+  color: #b3b3b3;
+}
+textarea:is(:focus, :valid){
+  padding: 14px;
+  border: 2px solid #4671EA;
+}
+textarea::-webkit-scrollbar{
+  width: 0px;
+}

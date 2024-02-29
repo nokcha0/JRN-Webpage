@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Race</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="../../CSS/back.css">  
+
+    <style id="dynamicStyle"></style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    <a href="../../index.html" class="back-button"></a>
+
+    <div id="gameArea"></div>
+    <div id="statusArea">
+        <p id="completionMessage"></p>
+        <p id="timer">Time: 0</p>
+        <p id="counter">Left: 100</p>
+        <input type="text" id="username" placeholder="Enter your name" />
+        <button onclick="submitScore()">Submit Score</button>
+        <h2>Leaderboard</h2>
+        <ul id="leaderboard"></ul>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            if(localStorage.getItem('darkMode') === 'true') {
+                document.body.style.backgroundColor = 'black';
+                document.body.style.color = 'white';
+                var buttons = document.querySelectorAll('button');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].style.color = 'white';
+                    buttons[i].style.borderColor = 'white';
+                    buttons[i].style.backgroundColor = 'black';
+                }
+            }
+        };
+    </script>
+</body>
+</html>

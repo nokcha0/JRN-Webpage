@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="../../CSS/back.css">  
+
+</head>
+<body>
+    <a href="../../index.html" class="back-button"></a>
+
+
+    <h1>Nigunba Encrypt and Decrypter</h1>
+    <form id="encryptionForm">
+        <textarea id="encryptionInput" placeholder="Enter text for encryption"></textarea>
+        <button type="submit" class="action-button">Encrypt</button>
+    </form>
+    <div id="encryptionOutput" class="output-div">
+        <span>Encryption:</span>
+        <p id="encryptionResult"></p>
+    </div>
+    <form id="decryptionForm">
+        <textarea id="decryptionInput" placeholder="Enter text for decryption"></textarea>
+        <button type="submit" class="action-button">Decrypt</button>
+    </form>
+    <div id="decryptionOutput" class="output-div">
+        <span>Decryption:</span>
+        <p id="decryptionResult"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+/* Import Google font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  color: #ffffff; /* Text color is white */
+}
+
+body {
+  background: #202325; /* Background color is #202325 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  width: 500px;
+  height: 500px;
+  display: grid;
+  gap: 10px;
+}
+
+.color {
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+
+}
+
+.color:active {
+  transform: scale(0.95);
+}
+
+.score, .timer {
+  margin: 20px;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.wrong {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 5em;
+    text-align: center;
+    line-height: 1;
+}
+
+@keyframes flash {
+    0% {color: white;}
+    25% {color: red;}
+    75% {color: red;}
+    100% {color: white;}
+}
+
+
+.flash {
+    animation: flash 0.5s linear;
+}
+
+
+@keyframes flash-infinite {
+    0% {color: white;}
+    50% {color: red;}
+    100% {color: white;}
+}
+
+.flash-infinite {
+    animation: flash-infinite 1s linear infinite;
+}
+
+.close-btn {
+    padding-left: 30px;
+    padding-top: 10px;
+    font-size: 35px;
+    color: #000;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+
+.menu-btn {
+    position: fixed;
+    color: #fff;
+    font-size: 35px;
+    right: 25px; /* Adjust as needed */
+    top: 25px; /* Adjust as needed */
+    cursor: pointer;
+    z-index: 2; /* To ensure the button is always on top */
+  }
+  
+  .side-bar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #1b1a1b;
+    backdrop-filter: blur(15px);
+    width: 500px;
+    position: fixed;
+    top: 0;
+    right: -500px; /* Changed to right */
+    overflow-y: auto;
+    transition: 0.6s ease;
+    transition-property: right; /* Changed to right */
+  }
+  
+.side-bar .username-input {
+    position: static; /* remove relative positioning */
+    width: 80%;
+    margin: 20px auto;
+    margin-top: 0; /* Adjust as needed */
+}
+
+  
+  .side-bar.active {
+    right: 0;
+  }
+  
+  .side-bar .menu {
+    flex-grow: 1;
+    text-align: left; /* Add this */
+    padding-left: 60px;
+}
+
+#leaderboard-list {
+    max-height: 300px; /* Adjust as needed */
+    display: inline-block; /* Add this */
+    text-align: left; /* Add this */
+}
+
+  .side-bar header {
+    text-align: center;
+    padding: 20px;
+  }
+
+
+.username-input {
+    margin: 20px auto;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .username-input label {
+    margin-bottom: 10px;
+    color: #000000;
+  }
+  
+  .username-input input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 100%;
+  }
+  
+  .username-input button {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #202325;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .username-input button:hover {
+    background-color: #1b1a1b;
+  }

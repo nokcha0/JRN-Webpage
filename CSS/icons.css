@@ -1,0 +1,43 @@
+.icons {
+    position: absolute;
+    z-index: 10;
+    top: 40px; 
+    left: 50px;
+    bottom: 32px;
+    display: grid;
+    grid-template-rows: repeat(4, 1fr); /* Changed from 5 to 4 to display only 4 icons per column */
+    grid-auto-flow: column; 
+    gap: 10px 30px; 
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon img {
+    width: 64px;
+    height: 64px;
+}
+
+.icon a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    max-width: 70px;
+    word-wrap: break-word;
+    padding: 10px;
+}
+
+.icon a span {
+    margin-top: 10px;
+}
+
+.icon a:hover {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    color: #000;
+}
