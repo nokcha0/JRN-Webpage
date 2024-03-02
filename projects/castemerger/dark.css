@@ -24,8 +24,8 @@
 
   #nextBox {
     position: absolute;
-    left: 500px;
-    top: 200px;
+    left: 25vw; 
+    top: 20vh;
     width: 100px;
     height: 100px;
     padding: 10px;
@@ -53,8 +53,8 @@
 
 #scoreBox {
   position: absolute;
-  left: 300px;
-  top: 200px; 
+  left: 15vw; 
+  top: 20vh;
   width: 100px;
   height: 100px;
   padding: 10px;
