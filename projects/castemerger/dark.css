@@ -1,0 +1,202 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #202325;
+  
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+  }
+
+
+  body {
+    text-align: center;
+  }
+
+  #nextBox {
+    position: absolute;
+    left: 500px;
+    top: 200px;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    border: 5px solid #000000;
+    border-radius: 15px;  
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+    text-align: center;  
+    font-family: 'Inter', sans-serif; 
+    font-size: 18px;
+}
+
+#nextBox p {
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding-bottom: 10px;
+  font-weight: bold;  
+  font-size: 18px; 
+}
+
+#nextFruit {
+    display: block;  
+    margin: 0 auto;
+}
+
+#scoreBox {
+  position: absolute;
+  left: 300px;
+  top: 200px; 
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border: 5px solid #000000;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px; 
+}
+
+#scoreBox #scoreText {
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding-bottom: 10px;
+  font-weight: bold;
+  font-size: 20px;  /* Make the "Score:" text slightly larger */
+}
+
+#scoreBox #score {
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding-bottom: 10px;
+  font-weight: bold;
+  font-size: 24px;  /* Make the score number larger */
+}
+
+@keyframes flash-infinite {
+  0% {color: white;}
+  50% {color: red;}
+  100% {color: white;}
+}
+
+.flash-infinite {
+  animation: flash-infinite 1s linear infinite;
+}
+
+.close-btn {
+  text-align: left;
+  color: #fff;
+  padding-left: 30px;
+  padding-top: 10px;
+  font-size: 35px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+
+.menu-btn {
+  position: fixed;
+  color: #fff;
+  font-size: 35px;
+  right: 25px; /* Adjust as needed */
+  top: 25px; /* Adjust as needed */
+  cursor: pointer;
+  z-index: 2; /* To ensure the button is always on top */
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #1b1a1b;
+  backdrop-filter: blur(15px);
+  width: 500px;
+  position: fixed;
+  top: 0;
+  right: -500px; /* Changed to right */
+  overflow-y: auto;
+  transition: 0.6s ease;
+  transition-property: right; /* Changed to right */
+}
+
+.side-bar .username-input {
+  position: static; /* remove relative positioning */
+  width: 80%;
+  margin: 20px auto;
+  margin-top: 0; /* Adjust as needed */
+}
+
+
+.side-bar.active {
+  right: 0;
+}
+
+.side-bar .menu {
+  flex-grow: 1;
+  text-align: left; /* Add this */
+  padding-left: 60px;
+}
+
+#leaderboard-list {
+  max-height: 300px; /* Adjust as needed */
+  display: inline-block; /* Add this */
+  text-align: left; /* Add this */
+}
+
+.side-bar header {
+  text-align: center;
+  padding: 20px;
+}
+
+
+.username-input {
+  margin: 20px auto;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.username-input label {
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.username-input input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  color: #ffffff;
+  width: 100%;
+}
+
+.username-input button {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #202325;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.username-input button:hover {
+  background-color: #1b1a1b;
+}

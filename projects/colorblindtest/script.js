@@ -1,7 +1,6 @@
 // https://console.firebase.google.com/u/1/project/colorblindtest-3e417/firestore/data/~2F
 // Duclos account
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyAkSMqbbafvpyqmrfx8M0rW_sZsiIMKBeQ",
     authDomain: "colorblindtest-3e417.firebaseapp.com",
@@ -122,11 +121,10 @@ const wrongColorClicked = (event) => {
     });
 }
 
-
 function updateLeaderboard() {
 
     if (!isGameOver) {
-        alert("Finish the fking game");
+        alert("Finish the game first");
         return;
     }
 
@@ -147,32 +145,61 @@ function updateLeaderboard() {
 
     leaderboardCollection.orderBy("score", "desc").limit(20).get().then((snapshot) => {
         const leaderboard = snapshot.docs.map(doc => doc.data());
-
         if (leaderboard.length < 20 || score > leaderboard[19].score) {
-            leaderboardCollection.add({ username, score });
+            // Check if the username already exists in the leaderboard
+            const existingUser = leaderboard.find(user => user.username === username);
+
+            if (existingUser) {
+                // If the new score is better, update the record
+                if (score > existingUser.score) {
+                    // Retrieve the document ID of the existing user
+                    const docId = snapshot.docs.find(doc => doc.data().username === username).id;
+
+                    leaderboardCollection.doc(docId).update({ score });
+                    alert("Your record has been updated");
+                } else {
+                    alert("You already have a better record");
+                }
+            } else {
+                leaderboardCollection.add({ username, score }).then(() => {
+                    // After the new score has been added, fetch the updated leaderboard
+                    leaderboardCollection.orderBy("score", "desc").limit(20).get().then((updatedSnapshot) => {
+                        const updatedLeaderboard = updatedSnapshot.docs.map(doc => doc.data());
+                        // After the leaderboard has been updated, find the user's rank
+                        const rank = updatedLeaderboard.findIndex(user => user.username === username) + 1;
+                        alert(`Score submitted, Rank: ${rank}`);
+                        // Update the leaderboard on the page
+                        displayLeaderboard();
+                    });
+                });
+            }
+
             usernameInput.value = '';
-            displayLeaderboard();
             isScoreSubmitted = true;
+        } else {
+            alert("Not worth listing on the leaderboard");
         }
     });
 }
 
-
 function displayLeaderboard() {
     const leaderboardCollection = db.collection("leaderboard");
     const leaderboardList = document.getElementById("leaderboard-list"); 
-  
+    const leaderboard = document.getElementById('leaderboard');
+    const leaderboardButton = document.getElementById('open-leaderboard'); 
+
+    leaderboardButton.style.visibility = 'hidden';
+    leaderboard.classList.add('active');
+
     leaderboardCollection.orderBy("score", "desc").limit(20).get().then((snapshot) => {
       const leaderboard = snapshot.docs.map(doc => doc.data());
       leaderboardList.innerHTML = "";
   
       leaderboard.forEach((entry, index) => {
-        leaderboardList.innerHTML += `<li>${index + 1}. ${entry.username}: ${entry.score}</li>`; // and this line
+        leaderboardList.innerHTML += `<li>${index + 1}. ${entry.username}: ${entry.score}</li>`; 
       });
     });
 }
-
-  
 
 window.onload = function() {
     
@@ -183,6 +210,9 @@ window.onload = function() {
     const leaderboardButton = document.getElementById('open-leaderboard'); 
     const closeLeaderboard = document.getElementsByClassName('close-btn')[0];
     const submitButton = document.getElementById('submit-username');
+
+    leaderboard.classList.remove('active');
+    leaderboardButton.style.visibility = 'visible';
 
     leaderboardButton.addEventListener('click', function() {
         leaderboard.classList.add('active');

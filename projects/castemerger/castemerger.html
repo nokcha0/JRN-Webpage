@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caste Merger</title>
+  <link rel="stylesheet" type="text/css" href="dark.css">
+  <link rel="stylesheet" href="../../CSS/back.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+</head>
+<body>
+
+    <a href="../projectslide/project.html" class="back-button"></a>
+    <h1>Caste Merger</h1>
+    <pre>
+
+      Climb the Caste by merging.
+
+
+    </pre>
+
+    <img src="Evolution.png" width="481" height="400" style="position:absolute; top:380px; left:200px;">
+
+    <div id="nextBox">
+      <p>Next:</p>
+      <img id="nextFruit" src="" width="50" height="50">
+  </div>
+  <div id="scoreBox">
+    <p id="scoreText">Score:</p>
+    <p id="score">0</p>
+  </div>
+
+  <div class="menu-btn" id="open-leaderboard">
+    <i class="fas fa-bars"></i>
+  </div>      
+
+<div id="leaderboard" class="side-bar">
+    <div class="close-btn">
+      <i class="fas fa-times"></i>
+    </div>
+    <header>
+        <h1>Leaderboard</h1>
+    </header>
+
+    <div class="username-input">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" autocomplete="off">
+        <button id="submit-username">Submit</button>
+      </div>
+
+    <div class="menu">
+        <ul id="leaderboard-list"></ul>
+    </div>
+</div>
+
+  <script type="module" src="main.js"></script>
+  <script type="text/javascript" src="./matter.js"></script>
+
+</body>
+</html>
