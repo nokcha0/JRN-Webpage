@@ -21,7 +21,7 @@
 
       Climb the Caste by merging.
 
-
+      <label for="hideEvo">Show Merge Evolutions:</label><input type="checkbox" id="showEvo">
     </pre>
 
     <img src="Evolution.png" class="evo">
@@ -60,6 +60,13 @@
 
   <script type="module" src="main.js"></script>
   <script type="text/javascript" src="./matter.js"></script>
+
+  <script>
+    document.getElementById('showEvo').addEventListener('change', function() {
+      document.querySelector('.evo').classList.toggle('show', this.checked);
+    });
+    </script>
+    
 
 </body>
 </html>

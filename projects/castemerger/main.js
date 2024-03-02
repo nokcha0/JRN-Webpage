@@ -130,6 +130,7 @@ function addPreviewFruit(positionX) {
   positionX = Math.min(positionX, 460 - fruit.radius);
 
   const body = Bodies.circle(positionX, 50, fruit.radius, {
+      preview: true,
       index: nextFruitIndex,
       isSleeping: true,
       render: {
@@ -164,6 +165,10 @@ Events.on(mouseConstraint, 'mousedown', function (e) {
   }
   addFruit(e.mouse.position.x);
   clickSound.play();
+  if (previewFruit) {
+    World.remove(world, previewFruit);
+  }
+  if (isMobileDevice) {addPreviewFruit(250);}
 });
 
 Events.on(mouseConstraint, 'mousemove', function (e) {
@@ -179,6 +184,9 @@ Events.on(mouseConstraint, 'mousemove', function (e) {
 
 Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
+      if (collision.bodyA.preview || collision.bodyB.preview) {
+        return;
+      }
       if (collision.bodyA.index === collision.bodyB.index) {
           const index = collision.bodyA.index;
 
@@ -304,9 +312,17 @@ function displayLeaderboard() {
 }
 
 
+let isMobileDevice;
+
 window.onload = function() {
     
   displayLeaderboard(); 
+
+  if (screen.width <= 1366) {
+    isMobileDevice = true;
+  } else {
+    isMobileDevice = false;
+  }
 
   const leaderboard = document.getElementById('leaderboard');
   const leaderboardButton = document.getElementById('open-leaderboard'); 
@@ -334,5 +350,5 @@ window.onload = function() {
 
 
 
-addPreviewFruit(310);
+addPreviewFruit(250);
 addNextFruitPreview();

@@ -29,6 +29,7 @@
     position: absolute;
     top:40vh; 
     left:10vw;
+    display: none;
   }
 
   #nextBox {
@@ -210,18 +211,26 @@
   background-color: #1b1a1b;
 }
 
-@media screen and (max-width: 1180px) {  
+.show {
+  display: block;
+}
+
+
+@media screen and (max-width: 1366px) {  
   #scoreBox {
-    left: 1vw;  
-    top: 10vh;   
+    left: 8vw;  
+    top: 20vh;   
   }
 
   #nextBox {
-    left: 15vw;  
-    top: 10vh;   
+    left: 20vw;  
+    top: 20vh;   
   }
 
-  .evo {
-    display: none;
+  .evo{
+    width:25vw;
+    height: 30vh;
+    left: 5vw;  
+    top: 45vh;   
   }
 }
