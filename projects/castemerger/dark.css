@@ -22,6 +22,15 @@
     text-align: center;
   }
 
+
+  .evo{
+    width: 25vw;
+    height: 45vh; 
+    position: absolute;
+    top:40vh; 
+    left:10vw;
+  }
+
   #nextBox {
     position: absolute;
     left: 25vw; 
@@ -199,4 +208,20 @@
 
 .username-input button:hover {
   background-color: #1b1a1b;
+}
+
+@media screen and (max-width: 1180px) {  
+  #scoreBox {
+    left: 1vw;  
+    top: 10vh;   
+  }
+
+  #nextBox {
+    left: 15vw;  
+    top: 10vh;   
+  }
+
+  .evo {
+    display: none;
+  }
 }
