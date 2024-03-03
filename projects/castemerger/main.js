@@ -168,7 +168,11 @@ Events.on(mouseConstraint, 'mousedown', function (e) {
   if (previewFruit) {
     World.remove(world, previewFruit);
   }
-  if (isMobileDevice) {addPreviewFruit(250);}
+  if (isMobileDevice) {
+    setTimeout(function(){
+      addPreviewFruit(250);
+    },800);
+  }
 });
 
 Events.on(mouseConstraint, 'mousemove', function (e) {
