@@ -44,7 +44,7 @@ const rightWall = Bodies.rectangle(485, 375, 50, 750, {
   render: { fillStyle: "#E6B143" }
 });
 
-const ground = Bodies.rectangle(250, 540, 500, 60, { 
+const ground = Bodies.rectangle(250, 540, 500, 60, {
   isStatic: true,
   render: { fillStyle: "#E6B143" }
 });
@@ -73,7 +73,7 @@ const loseHeight = 150;
 let isScoreSubmitted = false;
 
 const clickSound = new Audio('sounds/click.mp3');
-
+let gracePeriodEnd = 0;
 let nextFruitIndex = Math.floor(Math.random() * 5); 
 let nextNextFruitIndex = Math.floor(Math.random() * 5);
 
@@ -159,7 +159,7 @@ render.mouse = mouse;
 Events.on(mouseConstraint, 'mousedown', function (e) {
   if (!canDrop || gameOver) {
     return;
-}
+  }
   if (previewFruit) {
       World.remove(world, previewFruit);
   }
@@ -173,6 +173,7 @@ Events.on(mouseConstraint, 'mousedown', function (e) {
       addPreviewFruit(250);
     },800);
   }
+  gracePeriodEnd = Date.now() + 2000;
 });
 
 Events.on(mouseConstraint, 'mousemove', function (e) {
@@ -220,23 +221,24 @@ Events.on(engine, "collisionStart", (event) => {
 
           World.add(world, newBody);
       }
+
       setTimeout(function() {
         const aY = collision.bodyA.position.y + collision.bodyA.circleRadius;
         const bY = collision.bodyB.position.y + collision.bodyB.circleRadius;
-          if (aY < loseHeight || bY < loseHeight) {
-            gameOver = true; 
-            canDrop = false;  
-            scoreText.classList.add("flash-infinite");  
-            engine.world.gravity.y = 0;
-            for (var i = 0; i < world.bodies.length; i += 1) {
-              const body = world.bodies[i];
-              Body.setVelocity(body, {x: 0, y: 0});
-              Body.setAngularVelocity(body, 0);
-            }
-            displayLeaderboard();
-            leaderboard.classList.add('active');
-            return;
+        if ((aY < loseHeight || bY < loseHeight) && Date.now() > gracePeriodEnd) {
+          gameOver = true; 
+          canDrop = false;  
+          scoreText.classList.add("flash-infinite");  
+          engine.world.gravity.y = 0;
+          for (var i = 0; i < world.bodies.length; i += 1) {
+            const body = world.bodies[i];
+            Body.setVelocity(body, {x: 0, y: 0});
+            Body.setAngularVelocity(body, 0);
           }
+          displayLeaderboard();
+          leaderboard.classList.add('active');
+          return;
+        }
       }, 2000);
   });
 });
