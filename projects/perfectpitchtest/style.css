@@ -11,21 +11,23 @@ body {
   justify-content: center;
   min-height: 100vh;
   background: #202325;
-  flex-direction: column; /* Added this to stack the h1 and the wrapper vertically */
+  flex-direction: column;
+  color: #B2B2B2;
+
 }
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 35px 40px;
-    max-width: calc(70px * 14); /* Assuming your piano keys are the width determinant */
-    margin: 0 auto; /* Center the container */
+    max-width: calc(70px * 14);
+    margin: 0 auto;
     margin-bottom: -35px;
   }
   
   h1 {
     color: #B2B2B2;
-    margin-right: 220px; /* Add right margin to h1 */
+    margin-right: 220px; 
   }
   
   .score {
@@ -95,6 +97,7 @@ header input {
   display: flex;
   list-style: none;
   margin-top: 40px;
+  margin-left: 60px;
 }
 .piano-keys .key {
   cursor: pointer;
@@ -111,8 +114,6 @@ header input {
   background: linear-gradient(#181818, #000);
 }
 .piano-keys .black.active {
-  box-shadow: inset -5px -10px 10px rgba(255,255,255,0.1);
-  background:linear-gradient(to bottom, #000, #181818);
 }
 .piano-keys .white {
   height: 230px;
@@ -122,8 +123,6 @@ header input {
   background: linear-gradient(#fff 96%, #eee 4%);
 }
 .piano-keys .white.active {
-  box-shadow: inset -5px 5px 20px rgba(0,0,0,0.2);
-  background:linear-gradient(to bottom, #fff 0%, #eee 100%);
 }
 .piano-keys .key span {
   position: absolute;
@@ -146,11 +145,22 @@ header input {
 }
 
 .piano-keys .key.correct {
-    background-color: #008000 !important; 
+    background-color: #14c414 !important; 
   }
+
+  @keyframes green-flash {
+    0%, 100% { color: #B2B2B2; }
+    50% { color: #14c414; }
+  }
+  
+  .green-flash {
+    animation: green-flash 1s infinite;
+  }
+  
 
 button {
     display: block;
+    margin-top: 5px;
     margin: 20px auto 0;
     padding: 10px 20px;
     border-radius: 30px;
@@ -162,7 +172,7 @@ button {
     cursor: pointer;
     transition: background 0.3s ease;
   }
-  
+
   button:hover {
     background: #8c8c8c;
   }
@@ -179,7 +189,7 @@ button {
 
 @keyframes flash {
     0% { background-color: #4B4B4B; }
-    50% { background-color: #ff0000; }
+    40% { background-color: #ff0000; }
     100% { background-color: #4B4B4B; }
 }
 
@@ -230,3 +240,110 @@ button {
     width: 50px;
   }
 }
+
+
+
+.close-btn {
+    padding-left: 30px;
+    padding-top: 10px;
+    font-size: 35px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.close-btn:hover {
+    color: #6b6b6b;
+}
+
+.menu-btn {
+    position: fixed;
+    color: #fff;
+    font-size: 35px;
+    right: 25px; /* Adjust as needed */
+    top: 25px; /* Adjust as needed */
+    cursor: pointer;
+    z-index: 2; /* To ensure the button is always on top */
+  }
+  
+  .side-bar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #1b1a1b;
+    backdrop-filter: blur(15px);
+    width: 500px;
+    position: fixed;
+    top: 0;
+    right: -500px; /* Changed to right */
+    overflow-y: auto;
+    transition: 0.6s ease;
+    transition-property: right; /* Changed to right */
+  }
+  
+.side-bar .username-input {
+    position: static; /* remove relative positioning */
+    width: 80%;
+    margin: 20px auto;
+    margin-top: 0; /* Adjust as needed */
+}
+
+  
+  .side-bar.active {
+    right: 0;
+  }
+  
+  .side-bar .menu {
+    flex-grow: 1;
+    text-align: left; /* Add this */
+    padding-left: 60px;
+}
+
+#leaderboard-list {
+    max-height: 300px; /* Adjust as needed */
+    display: inline-block; /* Add this */
+    text-align: left; /* Add this */
+}
+
+  .side-bar header {
+    text-align: center;
+    padding: 20px;
+  }
+
+
+.username-input {
+    margin: 20px auto;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .username-input label {
+    margin-bottom: 10px;
+    color: #000000;
+  }
+  
+  .username-input input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 100%;
+  }
+  
+  .username-input button {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #202325;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .username-input button:hover {
+    background-color: #1b1a1b;
+  }

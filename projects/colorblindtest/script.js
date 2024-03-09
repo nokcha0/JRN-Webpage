@@ -157,6 +157,7 @@ function updateLeaderboard() {
 
                     leaderboardCollection.doc(docId).update({ score });
                     alert("Your record has been updated");
+                    displayLeaderboard();
                 } else {
                     alert("You already have a better record");
                 }

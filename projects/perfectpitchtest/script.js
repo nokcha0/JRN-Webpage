@@ -5,6 +5,19 @@ hearAgainButton = document.querySelector("#hear-again"),
 startButton = document.querySelector("#start"),
 scoreDisplay = document.querySelector("#score");
 
+const firebaseConfig = {
+    apiKey: "AIzaSyCTiCooEYFDC73puWpUK3b5unAO3IK-wys",
+    authDomain: "perfectpitchtest-50f59.firebaseapp.com",
+    projectId: "perfectpitchtest-50f59",
+    storageBucket: "perfectpitchtest-50f59.appspot.com",
+    messagingSenderId: "52491167272",
+    appId: "1:52491167272:web:b1481b283ebb97e545f71d"
+  };
+
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+const db = firebase.firestore();
+
 let allKeys = [];
 let currentKey = null;
 let gameStarted = false;
@@ -12,6 +25,8 @@ let currentAudio = null;
 let score = 0;
 let timer = 0;
 let interval = null;
+let isGameOver = false; 
+let isScoreSubmitted = false;
 
 const playTune = (key, correct = true) => {
     let audio = new Audio(`tunes/${key}.wav`);
@@ -37,14 +52,17 @@ const showHideNotes = () => {
 
 const handleEndGame = () => {
     gameStarted = false;
-    startButton.disabled = true; // disable the button when the game ends
-    startButton.textContent = 'Time Left: 0'; // show 'Time Left: 0' when the game ends
+    startButton.disabled = true; 
+    startButton.textContent = 'Time Left: 0'; 
+    startButton.classList.add('flashing'); 
     pianoKeys.forEach(key => {
         key.removeEventListener('click', handleKeyPress);
     });
-    startButton.classList.add('flashing');
-}
+    isGameOver = true
+    displayLeaderboard();
+    leaderboard.classList.add('active');
 
+}
 
 const randomKey = () => {
     currentKey = allKeys[Math.floor(Math.random() * allKeys.length)];
@@ -57,12 +75,13 @@ const handleKeyPress = (e) => {
         playTune(currentKey, false);
         score++; 
         scoreDisplay.textContent = `Score: ${score}`;
-        e.target.classList.add("correct");
+        scoreDisplay.classList.add("green-flash"); 
         setTimeout(() => {
+            scoreDisplay.classList.remove("green-flash"); 
             e.target.classList.remove("correct");
             randomKey();    
         }, 1000);
-        
+        e.target.classList.add("correct");
     } else {
         playTune(e.target.dataset.key, false);
         timer -= 5;
@@ -71,12 +90,9 @@ const handleKeyPress = (e) => {
             clearInterval(interval);
             handleEndGame();
         }
-        startButton.classList.add('flashing');
-        setTimeout(() => {
-            startButton.classList.remove('flashing');
-        }, 500);
     }
 }
+
 
 
 pianoKeys.forEach(key => {
@@ -104,11 +120,119 @@ startButton.addEventListener('click', () => {
         timer--;
         startButton.textContent = `Time left: ${timer}`;
         if (timer <= 0) {
-            clearInterval(interval);
             handleEndGame();
+            clearInterval(interval);
         }
     }, 1000);
 });
 
 volumeSlider.addEventListener("input", handleVolume);
 keysCheckbox.addEventListener("change", showHideNotes);
+
+function updateLeaderboard() {
+
+    if (!isGameOver) {
+        alert("Finish the game first");
+        return;
+    }
+
+    if (isScoreSubmitted) {
+        alert("Already submitted");
+        return;
+    }
+
+    const leaderboardCollection = db.collection("leaderboard");
+    
+    const usernameInput = document.getElementById("username");
+    const username = usernameInput.value.trim(); 
+
+    if (username === "") {
+        alert("Enter username");
+        return;
+    }
+
+    leaderboardCollection.orderBy("score", "desc").limit(20).get().then((snapshot) => {
+        const leaderboard = snapshot.docs.map(doc => doc.data());
+        if (leaderboard.length < 20 || score > leaderboard[19].score) {
+            // Check if the username already exists in the leaderboard
+            const existingUser = leaderboard.find(user => user.username === username);
+
+            if (existingUser) {
+                // If the new score is better, update the record
+                if (score > existingUser.score) {
+                    // Retrieve the document ID of the existing user
+                    const docId = snapshot.docs.find(doc => doc.data().username === username).id;
+
+                    leaderboardCollection.doc(docId).update({ score });
+                    alert("Your record has been updated");
+                    displayLeaderboard();
+                } else {
+                    alert("You already have a better record");
+                }
+            } else {
+                leaderboardCollection.add({ username, score }).then(() => {
+                    // After the new score has been added, fetch the updated leaderboard
+                    leaderboardCollection.orderBy("score", "desc").limit(20).get().then((updatedSnapshot) => {
+                        const updatedLeaderboard = updatedSnapshot.docs.map(doc => doc.data());
+                        // After the leaderboard has been updated, find the user's rank
+                        const rank = updatedLeaderboard.findIndex(user => user.username === username) + 1;
+                        alert(`Score submitted, Rank: ${rank}`);
+                        // Update the leaderboard on the page
+                        displayLeaderboard();
+                    });
+                });
+            }
+
+            usernameInput.value = '';
+            isScoreSubmitted = true;
+        } else {
+            alert("Not worth listing on the leaderboard");
+        }
+    });
+}
+
+function displayLeaderboard() {
+    const leaderboardCollection = db.collection("leaderboard");
+    const leaderboardList = document.getElementById("leaderboard-list"); 
+    const leaderboard = document.getElementById('leaderboard');
+    const leaderboardButton = document.getElementById('open-leaderboard'); 
+
+    leaderboardButton.style.visibility = 'hidden';
+    leaderboard.classList.add('active');
+
+    leaderboardCollection.orderBy("score", "desc").limit(20).get().then((snapshot) => {
+      const leaderboard = snapshot.docs.map(doc => doc.data());
+      leaderboardList.innerHTML = "";
+  
+      leaderboard.forEach((entry, index) => {
+        leaderboardList.innerHTML += `<li>${index + 1}. ${entry.username}: ${entry.score}</li>`; 
+      });
+    });
+}
+
+window.onload = function() {
+    
+    displayLeaderboard(); 
+
+    const leaderboard = document.getElementById('leaderboard');
+    const leaderboardButton = document.getElementById('open-leaderboard'); 
+    const closeLeaderboard = document.getElementsByClassName('close-btn')[0];
+    const submitButton = document.getElementById('submit-username');
+
+    leaderboard.classList.remove('active');
+    leaderboardButton.style.visibility = 'visible';
+
+    leaderboardButton.addEventListener('click', function() {
+        leaderboard.classList.add('active');
+        leaderboardButton.style.visibility = 'hidden';
+    });
+
+    closeLeaderboard.addEventListener('click', function() {
+        leaderboard.classList.remove('active');
+        leaderboardButton.style.visibility = 'visible';
+    });
+
+    submitButton.addEventListener('click', function() {
+        updateLeaderboard();
+    });
+};
