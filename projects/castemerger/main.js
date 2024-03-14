@@ -44,7 +44,7 @@ const rightWall = Bodies.rectangle(485, 375, 50, 750, {
   render: { fillStyle: "#E6B143" }
 });
 
-const ground = Bodies.rectangle(250, 540, 500, 60, {
+const ground = Bodies.rectangle(250, 300, 500, 60, {  //540
   isStatic: true,
   render: { fillStyle: "#E6B143" }
 });
@@ -133,6 +133,7 @@ function addPreviewFruit(positionX) {
       preview: true,
       index: nextFruitIndex,
       isSleeping: true,
+      isSensor: true,
       render: {
           sprite: { texture: `${fruit.name}.png`, opacity: 0.5 }
       },
@@ -222,7 +223,6 @@ Events.on(engine, "collisionStart", (event) => {
           World.add(world, newBody);
       }
 
-      setTimeout(function() {
         const aY = collision.bodyA.position.y + collision.bodyA.circleRadius;
         const bY = collision.bodyB.position.y + collision.bodyB.circleRadius;
         if ((aY < loseHeight || bY < loseHeight) && Date.now() > gracePeriodEnd) {
@@ -239,7 +239,6 @@ Events.on(engine, "collisionStart", (event) => {
           leaderboard.classList.add('active');
           return;
         }
-      }, 2000);
   });
 });
 
