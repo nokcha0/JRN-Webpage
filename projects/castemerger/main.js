@@ -44,7 +44,7 @@ const rightWall = Bodies.rectangle(485, 375, 50, 750, {
   render: { fillStyle: "#E6B143" }
 });
 
-const ground = Bodies.rectangle(250, 300, 500, 60, {  //540
+const ground = Bodies.rectangle(250, 540, 500, 60, {  
   isStatic: true,
   render: { fillStyle: "#E6B143" }
 });
