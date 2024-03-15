@@ -1,5 +1,4 @@
 const pianoKeys = document.querySelectorAll(".piano-keys .key"),
-volumeSlider = document.querySelector(".volume-slider input"),
 keysCheckbox = document.querySelector(".keys-checkbox input"),
 hearAgainButton = document.querySelector("#hear-again"),
 startButton = document.querySelector("#start"),
@@ -38,12 +37,6 @@ const playTune = (key, correct = true) => {
         clickedKey.classList.remove("wrong");
     }, 150);
     return audio;
-}
-
-const handleVolume = (e) => {
-    Array.from(document.querySelectorAll('audio')).forEach(audio => {
-        audio.volume = e.target.value;
-    });
 }
 
 const showHideNotes = () => {
@@ -126,7 +119,6 @@ startButton.addEventListener('click', () => {
     }, 1000);
 });
 
-volumeSlider.addEventListener("input", handleVolume);
 keysCheckbox.addEventListener("change", showHideNotes);
 
 function updateLeaderboard() {
