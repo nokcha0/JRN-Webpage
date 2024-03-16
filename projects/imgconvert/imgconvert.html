@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JRN Mass Image Converter</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<link rel="stylesheet" href="../../CSS/back.css">  
+
+</head>
+<body>
+    <a href="../utilityslide/utility.html" class="back-button"></a>
+
+    <div class="centered-container">
+        <div class="title-container">
+            <img src="icon.png" alt="Icon" class="icon">
+            <h1>JRN Mass Image Converter</h1>
+        </div>
+        <div class="upload-container">
+            <input type="file" id="image-input" multiple accept="image/*">
+            <div class="format-selection">
+                <label for="format-select">Convert to:</label>
+                <select id="format-select">
+                    <option value="image/jpeg">JPG</option>
+                    <option value="image/png">PNG</option>
+                </select>
+            </div>
+            <button onclick="convertImages()">Convert & Download</button>
+          </div>
+          <div>
+              <input type="radio" id="individual" name="download-type" value="individual" checked>
+              <label for="individual">Download Individual Files</label>
+              <input type="radio" id="zip" name="download-type" value="zip">
+              <label for="zip">Download as ZIP</label>
+            </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

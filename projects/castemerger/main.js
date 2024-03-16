@@ -117,7 +117,7 @@ function addFruit(positionX) {
 
   setTimeout(function() {
       canDrop = true; 
-  }, 500);
+  }, 1800);
 
   clickSound.play(); 
 }

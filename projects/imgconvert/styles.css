@@ -1,0 +1,95 @@
+body {
+    background-color: #202325;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px; /* Added a margin around the body for more space */
+    padding: 20px; /* Added padding for a more spacious feel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 40px); /* Adjusted for the added margin */
+    box-sizing: border-box;
+}
+
+.centered-container {
+    width: 80%; /* Adjusted for a more spacious feel */
+    max-width: 700px; /* Slightly larger max-width */
+    background-color: #292d32;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 60px; /* Increased padding for more internal space */
+    box-sizing: border-box;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px; /* Increased space below the title */
+}
+
+.title-container h1 {
+    color: #66fcf1;
+    margin-left: 30px; /* Increased space between icon and text */
+}
+
+.icon {
+    width: 60px; /* Adjusted for a slightly larger icon */
+    height: 60px; /* Adjusted for a slightly larger icon */
+}
+
+input[type="radio"], input[type="file"] {
+    margin-right: 20px; /* Increased spacing */
+}
+
+label {
+    margin-right: 30px; /* Increased spacing */
+    color: #c5c6c7;
+}
+
+input, select, button {
+    padding: 15px; /* Increased padding for larger touch targets */
+    margin-bottom: 20px; /* Increased space between elements */
+    border: none; /* Style adjustment */
+    background-color: #1b1e21;
+    color: #c5c6c7;
+    border-radius: 8px; /* Slightly rounded corners for a modern look */
+}
+
+button {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 25px; /* Added more space above the button */
+    width: 100%; /* Full-width button for better accessibility */
+}
+
+button:hover {
+    background-color: #343a40;
+}
+
+.custom-file-upload {
+    border: none; /* Style adjustment */
+    display: inline-block;
+    padding: 12px 18px; /* Adjusted padding */
+    cursor: pointer;
+    background-color: #1b1e21;
+    color: #c5c6c7;
+    border-radius: 8px; /* Slightly rounded corners for a modern look */
+    margin-top: 15px; /* Increased space from the previous element */
+    width: 100%; /* Full-width for consistency */
+}
+
+.custom-file-upload:hover {
+    background-color: #343a40;
+}
+
+@media (max-width: 768px) {
+    .centered-container {
+        width: 90%; /* More width for smaller screens */
+        padding: 40px; /* Adjusted padding for small screens */
+    }
+
+    .title-container h1 {
+        font-size: 20px; /* Adjusted font size for smaller screens */
+    }
+}

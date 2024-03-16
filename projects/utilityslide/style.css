@@ -142,3 +142,6 @@ a > .row {
 .card[for="c3"] {
     background-image: url('img/tts.jpg');
 }
+.card[for="c4"] {
+    background-image: url('img/img.jpg');
+}
