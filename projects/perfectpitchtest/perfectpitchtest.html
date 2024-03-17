@@ -28,7 +28,7 @@
           <i class="fas fa-times"></i>
         </div>
         <header>
-            <h1>Leaderboard</h1>
+            <h1 id="leaderboard-title">Leaderboard</h1>
         </header>
 
         <div class="username-input">
@@ -71,9 +71,9 @@
         <li class="key white" data-key="b"><span>B</span></li>
       </ul>
       <button id="start">Start <span id="timer"></span></button>
-      <div>
-        <input type="checkbox" id="hardmodeCheckbox">
-        <label for="hardmodeCheckbox">Hard Mode</label> 
+      <div class="checkbox-wrapper-10">
+        <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
+        <label class="tgl-btn" data-tg-off="HardMode" data-tg-on="EasyMode" for="cb5" for="hardmodeCheckbox"></label>
       </div>
     </div>
     <script src="script.js"></script>
