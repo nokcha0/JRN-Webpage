@@ -1,9 +1,3 @@
-const pianoKeys = document.querySelectorAll(".piano-keys .key"),
-keysCheckbox = document.querySelector(".keys-checkbox input"),
-hearAgainButton = document.querySelector("#hear-again"),
-startButton = document.querySelector("#start"),
-scoreDisplay = document.querySelector("#score");
-
 const firebaseConfig = {
     apiKey: "AIzaSyCTiCooEYFDC73puWpUK3b5unAO3IK-wys",
     authDomain: "perfectpitchtest-50f59.firebaseapp.com",
@@ -17,6 +11,16 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const db = firebase.firestore();
 
+const checkbox = document.getElementById('hardmodeCheckbox');
+const pianoKeys = document.querySelectorAll(".piano-keys .key"),
+keysCheckbox = document.querySelector(".keys-checkbox input"),
+hearAgainButton = document.querySelector("#hear-again"),
+startButton = document.querySelector("#start"),
+scoreDisplay = document.querySelector("#score");
+
+let notes = ['c', 'c-', 'd', 'd-', 'e', 'f', 'f-', 'g', 'g-', 'a', 'a-', 'b'];
+let octaves = [3, 4, 5];  
+
 let allKeys = [];
 let currentKey = null;
 let gameStarted = false;
@@ -26,16 +30,29 @@ let timer = 0;
 let interval = null;
 let isGameOver = false; 
 let isScoreSubmitted = false;
+let randomOctave = 4;
+let hardmode = false;
 
-const playTune = (key, correct = true) => {
-    let audio = new Audio(`tunes/${key}.wav`);
+const playTune = (noteWithOctave, correct = true) => {
+    let audioFileName = `tunes/${noteWithOctave}.mp3`; 
+    let audio = new Audio(audioFileName);
+    audio.volume = 1;
     audio.play();
-    const clickedKey = document.querySelector(`[data-key="${key}"]`);
-    clickedKey.classList.add(correct ? "active" : "wrong");
-    setTimeout(() => {
-        clickedKey.classList.remove("active");
-        clickedKey.classList.remove("wrong");
-    }, 150);
+    dataKey = noteWithOctave.slice(0, -1);
+    console.log("dataKey octave false: " + dataKey);
+
+    if (firstKeyPlay){
+        firstKeyPlay = false;
+        return audio;
+    }
+
+    const clickedKey = document.querySelector(`[data-key="${dataKey}"]`);
+    if (clickedKey) {
+        clickedKey.classList.add(correct ? "correct" : "wrong");
+        setTimeout(() => {
+            clickedKey.classList.remove("correct", "wrong");
+        }, 150);
+    }
     return audio;
 }
 
@@ -58,25 +75,32 @@ const handleEndGame = () => {
 }
 
 const randomKey = () => {
-    currentKey = allKeys[Math.floor(Math.random() * allKeys.length)];
-    currentAudio = playTune(currentKey);
+    const randomNote = notes[Math.floor(Math.random() * notes.length)];
+    if(hardmode) {
+        randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
+    }
+    currentKey = `${randomNote}${randomOctave}`;
+    console.log("Random Key octave true: " + currentKey);
+    firstKeyPlay = true;
+    currentAudio = playTune(currentKey, true);
 }
 
 const handleKeyPress = (e) => {
     if(!gameStarted) return;
-    if(e.target.dataset.key === currentKey) {
-        playTune(currentKey, false);
+    keyPressed = e.target.dataset.key + currentKey.slice(-1);
+    console.log("pressedKey octave true: " + keyPressed);
+    console.log("currentKey octave true: " + currentKey);
+    if(keyPressed === currentKey) {
+        playTune(currentKey, true);
         score++; 
         scoreDisplay.textContent = `Score: ${score}`;
         scoreDisplay.classList.add("green-flash"); 
         setTimeout(() => {
             scoreDisplay.classList.remove("green-flash"); 
-            e.target.classList.remove("correct");
             randomKey();    
         }, 1000);
-        e.target.classList.add("correct");
     } else {
-        playTune(e.target.dataset.key, false);
+        playTune(keyPressed, false);
         timer -= 5;
         startButton.textContent = `Time left: ${timer}`;
         if (timer <= 0) {
@@ -85,8 +109,6 @@ const handleKeyPress = (e) => {
         }
     }
 }
-
-
 
 pianoKeys.forEach(key => {
     allKeys.push(key.dataset.key);
@@ -101,6 +123,7 @@ hearAgainButton.addEventListener('click', () => {
 });
 
 startButton.addEventListener('click', () => {
+    checkbox.disabled = true;
     gameStarted = true;
     startButton.disabled = true;
     startButton.classList.remove('flashing');
@@ -117,9 +140,17 @@ startButton.addEventListener('click', () => {
             clearInterval(interval);
         }
     }, 1000);
+
 });
 
-keysCheckbox.addEventListener("change", showHideNotes);
+checkbox.addEventListener('change', function() {
+    if (this.checked) {
+        hardmode = true;
+    } else {
+        hardmode = false;
+    }
+    console.log('Hard Mode:', hardmode);
+});
 
 function updateLeaderboard() {
 

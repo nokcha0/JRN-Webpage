@@ -145,8 +145,8 @@ header input {
     background: #ff0000; 
 }
 
-.piano-keys .key.correct {
-    background-color: #14c414 !important; 
+.piano-keys .white.correct, .piano-keys .black.correct {
+    background: #14c414; 
   }
 
   @keyframes green-flash {

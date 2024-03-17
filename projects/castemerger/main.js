@@ -34,26 +34,26 @@ const render = Render.create({
 
 const world = engine.world;
 
-const leftWall = Bodies.rectangle(15, 375, 50, 750, {  
+const leftWall = Bodies.rectangle(15, 375, 30, 750, {  
   isStatic: true,
-  render: { fillStyle: "#E6B143" }
+  render: { fillStyle: "#9b9b9b" }
 });
 
-const rightWall = Bodies.rectangle(485, 375, 50, 750, { 
+const rightWall = Bodies.rectangle(485, 375, 30, 750, { 
   isStatic: true,
-  render: { fillStyle: "#E6B143" }
+  render: { fillStyle: "#9b9b9b" }
 });
 
-const ground = Bodies.rectangle(250, 540, 500, 60, {  
+const ground = Bodies.rectangle(250, 540, 500, 40, {  //540
   isStatic: true,
-  render: { fillStyle: "#E6B143" }
+  render: { fillStyle: "#9b9b9b" }
 });
 
 const topLine = Bodies.rectangle(250, 150, 500, 2, { 
   name: "topLine",
   isStatic: true,
   isSensor: true,
-  render: { fillStyle: "#E6B143" }
+  render: { fillStyle: "#9b9b9b" }
 })
 
 World.add(world, [leftWall, rightWall, ground, topLine]);
@@ -71,9 +71,9 @@ let gameOver = false;
 let score = 0;
 const loseHeight = 150;
 let isScoreSubmitted = false;
+let disableGameOver = false;
 
 const clickSound = new Audio('sounds/click.mp3');
-let gracePeriodEnd = 0;
 let nextFruitIndex = Math.floor(Math.random() * 5); 
 let nextNextFruitIndex = Math.floor(Math.random() * 5);
 
@@ -91,8 +91,8 @@ function addFruit(positionX) {
 
   const fruit = FRUITS[nextFruitIndex];
 
-  positionX = Math.max(positionX, 40 + fruit.radius);
-  positionX = Math.min(positionX, 460 - fruit.radius);
+  positionX = Math.max(positionX, 30 + fruit.radius);
+  positionX = Math.min(positionX, 470 - fruit.radius);
 
   const body = Bodies.circle(positionX, 50, fruit.radius, {
       index: nextFruitIndex,
@@ -117,7 +117,7 @@ function addFruit(positionX) {
 
   setTimeout(function() {
       canDrop = true; 
-  }, 1800);
+  }, 1000);
 
   clickSound.play(); 
 }
@@ -126,8 +126,8 @@ function addFruit(positionX) {
 function addPreviewFruit(positionX) {
   const fruit = FRUITS[nextFruitIndex];
 
-  positionX = Math.max(positionX, 40 + fruit.radius);
-  positionX = Math.min(positionX, 460 - fruit.radius);
+  positionX = Math.max(positionX, 30 + fruit.radius);
+  positionX = Math.min(positionX, 470 - fruit.radius);
 
   const body = Bodies.circle(positionX, 50, fruit.radius, {
       preview: true,
@@ -174,7 +174,11 @@ Events.on(mouseConstraint, 'mousedown', function (e) {
       addPreviewFruit(250);
     },800);
   }
-  gracePeriodEnd = Date.now() + 2000;
+  disableGameOver = true;
+
+  setTimeout(() => {
+    disableGameOver = false;
+  }, 1000);
 });
 
 Events.on(mouseConstraint, 'mousemove', function (e) {
@@ -222,24 +226,27 @@ Events.on(engine, "collisionStart", (event) => {
 
           World.add(world, newBody);
       }
-
-        const aY = collision.bodyA.position.y + collision.bodyA.circleRadius;
-        const bY = collision.bodyB.position.y + collision.bodyB.circleRadius;
-        if ((aY < loseHeight || bY < loseHeight) && Date.now() > gracePeriodEnd) {
-          gameOver = true; 
-          canDrop = false;  
-          scoreText.classList.add("flash-infinite");  
-          engine.world.gravity.y = 0;
-          for (var i = 0; i < world.bodies.length; i += 1) {
-            const body = world.bodies[i];
-            Body.setVelocity(body, {x: 0, y: 0});
-            Body.setAngularVelocity(body, 0);
-          }
-          displayLeaderboard();
-          leaderboard.classList.add('active');
-          return;
-        }
   });
+});
+
+Events.on(engine, 'beforeUpdate', function(event) {
+  if(!disableGameOver){
+    for (let body of world.bodies) {
+      let yPOS = (body.position.y + body.circleRadius)
+      if (!body.preview && (yPOS < loseHeight)) {
+        console.log(("Over Line: "+ yPOS))
+        disableGameOver = true;
+        gameOver = true; 
+        canDrop = false;  
+        scoreText.classList.add("flash-infinite");  
+        Runner.stop(engine);
+        Render.stop(render);
+        displayLeaderboard();
+        leaderboard.classList.add('active');
+        return;
+      }
+    }
+  }
 });
 
 function updateLeaderboard() {
