@@ -1,6 +1,7 @@
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let sourceNode;
 let gainNode = audioContext.createGain();
+let currentBuffer = null;
 
 document.getElementById('audioFile').addEventListener('change', function(event) {
     let files = event.target.files;
@@ -9,6 +10,7 @@ document.getElementById('audioFile').addEventListener('change', function(event) 
         let reader = new FileReader();
         reader.onload = function(e) {
             audioContext.decodeAudioData(e.target.result, function(buffer) {
+                currentBuffer = buffer; // 버퍼 저장
                 if(sourceNode){
                     sourceNode.disconnect();
                 }
@@ -25,6 +27,7 @@ document.getElementById('audioFile').addEventListener('change', function(event) 
 document.getElementById('volumeControl').addEventListener('input', function() {
     let volume = this.value;
     gainNode.gain.value = volume;
+    document.getElementById('volumePercentage').textContent = Math.round(volume * 100) + '%';
 });
 
 document.getElementById('playButton').addEventListener('click', function() {
@@ -32,3 +35,4 @@ document.getElementById('playButton').addEventListener('click', function() {
         sourceNode.start(0);
     }
 });
+

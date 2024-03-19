@@ -16,6 +16,7 @@ function adjustFullScreenSize() {
 function makeWindowActive(thisid) {
 	$(".window").each(function() {      
 		$(this).css('z-index', $(this).css('z-index') - 1);
+		
 	});
 	$("#window" + thisid).css('z-index',1000);
 	$(".window").removeClass("activeWindow");

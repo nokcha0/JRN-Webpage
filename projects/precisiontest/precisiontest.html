@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Precision Test</title>
+	<link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="./leaderboard.css">
+    <link rel="stylesheet" href="../../CSS/back.css">  
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" /> 
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+</head>
+
+<body>
+
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+
+	<div id="container">
+
+		<div id="game"></div>
+		<div id="score">0</div>
+		<div class="game-over">
+			<h2>Over.</h2>
+			<p>< Click Here To Restart ></p>
+		</div>
+		<div class="game-ready">
+			<div id="start-button">Precision Test.</div>
+			<div></div>
+		</div>
+	</div>
+    <a href="../projectslide/project.html" class="back-button"></a>
+
+	<div class="menu-btn" id="open-leaderboard">
+		<i class="fas fa-bars"></i>
+	  </div>  
+
+	<div id="leaderboard" class="side-bar">
+		<div class="close-btn">
+		  <i class="fas fa-times"></i>
+		</div>
+		<header>
+			<h1>Leaderboard</h1>
+		</header>
+	
+		<div class="username-input">
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username" autocomplete="off">
+			<button id="submit-username">Submit</button>
+		  </div>
+	
+		<div class="menu">
+			<ul id="leaderboard-list"></ul>
+		</div>
+	</div>
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
+	<script src="./script.js"></script>
+	<script src="./leaderboard.js"></script>
+
+
+</body>
+
+</html>

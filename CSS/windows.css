@@ -37,7 +37,6 @@ input,select{vertical-align:middle}
     border-radius: 8px; 
 }
 
-
 .windowHeader {
     background-color: #363636;
     text-align: right;
@@ -205,4 +204,7 @@ input,select{vertical-align:middle}
     margin: 2px;
     border-bottom-left-radius: 15px; /* adjust this value as needed */
     border-bottom-right-radius: 15px; /* adjust this value as needed */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    resize: both;
 }

@@ -151,3 +151,6 @@ a > .row {
 .card[for="c6"] {
     background-image: url('img/castemerger.jpg');
 }
+.card[for="c7"] {
+    background-image: url('img/precisiontest.jpg');
+}
