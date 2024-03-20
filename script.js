@@ -132,7 +132,7 @@ $(document).ready(function(){
             min = (min < 10) ? "0" + min : min;
             sec = (sec < 10) ? "0" + sec : sec;
 
-            time.textContent = hr + ":" + min + ":" + sec;
+            time.textContent = hr + " : " + min + " : " + sec;
             midday.textContent = middayValue;
         },
         1000
