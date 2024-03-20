@@ -262,9 +262,9 @@ class Game {
     this.addBlock();
     this.tick();
     this.updateState(this.STATES.READY);
-    document.addEventListener("keydown", (e) => {
-      if (e.keyCode == 32) this.onAction();
-    });
+    // document.addEventListener("keydown", (e) => {
+    //   if (e.keyCode == 32) this.onAction();
+    // });
     document.addEventListener("click", (e) => {
       let targetElement = e.target; 
       while (targetElement != null) {
