@@ -154,3 +154,6 @@ a > .row {
 .card[for="c7"] {
     background-image: url('img/precisiontest.jpg');
 }
+.card[for="c8"] {
+    background-image: url('img/geographytest.jpg');
+}

@@ -6,7 +6,7 @@ windowLeftPos = new Array,
 panel,
 id;
 
-NUMBER_OF_BG = 42;
+NUMBER_OF_BG = 50;
 
 
 function adjustFullScreenSize() {

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Geography Test - Location</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <!-- style related -->
+  <link rel="stylesheet" href="../../../CSS/back.css">  
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+  <!-- scripts -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <script src="./js/main.js" type="module"></script>
+</head>
+
+<body>
+  <div class="map-container">
+    <div class="selection-container"></div>
+    <div id="map" class="to-blur"></div>
+    <div class="command-container to-blur">
+      <div class="progress"></div>
+      <div class="command"></div>
+      <div class="time-elapsed"></div>
+    </div>
+    <div class="countdown-timer">
+      <span class="countdown num3">3</span>
+      <span class="countdown num2">2</span>
+      <span class="countdown num1">1</span>
+      <span class="countdown go">Go!</span>
+    </div>
+    <div class="end-of-game-infobox">
+      <div>
+        <h1 class="end-of-game-infobox-heading">Result</h1>
+        <div class="end-of-game-infobox-result"></div>
+        <table class="end-of-game-infobox-highscore table-container"></table>
+        <button class="play-again-button">Play Again</button>
+      </div>
+    </div>
+    <div class="result"></div>
+  </div>
+  <a href="../geographytest.html" class="back-button"></a>
+
+</body>
+
+</html>
