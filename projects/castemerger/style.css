@@ -24,18 +24,18 @@
 
 
   .evo{
-    width: 25vw;
+    width: 27vw;
     height: 45vh; 
     position: absolute;
     top:40vh; 
-    left:10vw;
+    right:8vw;
     display: none;
   }
 
   #nextBox {
     position: absolute;
-    left: 25vw; 
-    top: 20vh;
+    left: 20vw; 
+    top: 40vh;
     width: 100px;
     height: 100px;
     padding: 10px;
@@ -63,7 +63,7 @@
 
 #scoreBox {
   position: absolute;
-  left: 15vw; 
+  left: 20vw; 
   top: 20vh;
   width: 100px;
   height: 100px;
@@ -91,6 +91,36 @@
   padding-bottom: 10px;
   font-weight: bold;
   font-size: 24px;  /* Make the score number larger */
+}
+
+#holdBox {
+  cursor: pointer;
+  position: absolute;
+  left: 20vw; 
+  top: 60vh;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border: 5px solid #000000;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px; 
+}
+
+#holdBox p {
+  color: rgb(0, 0, 0);
+  margin: 0;
+  padding-bottom: 10px;
+  font-weight: bold;  
+  font-size: 18px; 
+}
+
+#holdFruit {
+  display: block;  
+  margin: 0 auto;
 }
 
 @keyframes flash-infinite {
@@ -230,7 +260,7 @@
   .evo{
     width:25vw;
     height: 30vh;
-    left: 5vw;  
+    right: 5vw;  
     top: 45vh;   
   }
 }

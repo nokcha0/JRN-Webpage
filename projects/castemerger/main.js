@@ -73,6 +73,9 @@ const loseHeight = 150;
 let isScoreSubmitted = false;
 let disableGameOver = false;
 
+let holdFruitIndex = null;
+let originalPosition = null;
+
 const clickSound = new Audio('sounds/click.mp3');
 let nextFruitIndex = Math.floor(Math.random() * 5); 
 let nextNextFruitIndex = Math.floor(Math.random() * 5);
@@ -145,6 +148,54 @@ function addPreviewFruit(positionX) {
   World.add(world, body);
 }
 
+function holdFruit() {
+  if (!canDrop || gameOver) {
+    return;
+  }
+
+  if (holdFruitIndex === null) {
+    holdFruitIndex = nextFruitIndex;
+    nextFruitIndex = nextNextFruitIndex;
+    nextNextFruitIndex = Math.floor(Math.random() * 5);
+  } else {
+    [nextFruitIndex, holdFruitIndex] = [holdFruitIndex, nextFruitIndex];
+  }
+
+  addNextFruitPreview();
+  updateHoldFruitPreview();
+
+  if (previewFruit) {
+    World.remove(world, previewFruit); 
+  }
+  addPreviewFruit(originalPosition);
+}
+
+document.getElementById('holdBox').addEventListener('click', function() {
+  holdFruit();
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'Space') {
+    holdFruit(); 
+    event.preventDefault();
+  }
+});
+
+document.addEventListener('contextmenu', function(event) {
+  holdFruit(); 
+  event.preventDefault();
+});
+
+function updateHoldFruitPreview() {
+  const holdFruitImg = document.getElementById('holdFruit'); 
+  if (holdFruitIndex !== null) {
+    const fruit = FRUITS[holdFruitIndex];
+    holdFruitImg.src = `${fruit.name}.png`;
+  } else {
+    holdFruitImg.src = 'base/null.jpg';
+  }
+}
+
 const mouse = Mouse.create(render.canvas);
 const mouseConstraint = MouseConstraint.create(engine, {
   mouse: mouse,
@@ -158,6 +209,8 @@ const mouseConstraint = MouseConstraint.create(engine, {
 render.mouse = mouse;
 
 Events.on(mouseConstraint, 'mousedown', function (e) {
+
+
   if (!canDrop || gameOver) {
     return;
   }
@@ -182,14 +235,21 @@ Events.on(mouseConstraint, 'mousedown', function (e) {
 });
 
 Events.on(mouseConstraint, 'mousemove', function (e) {
+
   if (!canDrop || gameOver) {
     return;
-}
+  }
+
+  if (e.button === 2) {
+    holdFruit();
+    return; 
+  }
 
   if (previewFruit) {
       World.remove(world, previewFruit);
   }
   addPreviewFruit(e.mouse.position.x);
+  originalPosition = e.mouse.position.x;
 });
 
 Events.on(engine, "collisionStart", (event) => {
@@ -365,3 +425,4 @@ window.onload = function() {
 
 addPreviewFruit(250);
 addNextFruitPreview();
+updateHoldFruitPreview(); 

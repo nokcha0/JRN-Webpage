@@ -1,0 +1,21 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+#quiz-container {
+    text-align: center;
+}
+
+#flag-img {
+    width: 300px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+#answer-input {
+    margin-bottom: 10px;
+}
