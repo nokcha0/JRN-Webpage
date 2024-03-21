@@ -31,6 +31,7 @@ const render = Render.create({
       height: 550,
   }
 });
+render.canvas.id = 'canvas';
 
 const world = engine.world;
 
@@ -175,15 +176,13 @@ document.getElementById('holdBox').addEventListener('click', function() {
 });
 
 document.addEventListener('keydown', function(event) {
+  if (gameOver) {
+    return;
+  }
   if (event.code === 'Space') {
     holdFruit(); 
     event.preventDefault();
   }
-});
-
-document.addEventListener('contextmenu', function(event) {
-  holdFruit(); 
-  event.preventDefault();
 });
 
 function updateHoldFruitPreview() {
@@ -208,31 +207,48 @@ const mouseConstraint = MouseConstraint.create(engine, {
 });
 render.mouse = mouse;
 
-Events.on(mouseConstraint, 'mousedown', function (e) {
-
-
+console.log(render.canvas);
+canvas.addEventListener('mousedown', function(event) {
   if (!canDrop || gameOver) {
     return;
   }
-  if (previewFruit) {
-      World.remove(world, previewFruit);
-  }
-  addFruit(e.mouse.position.x);
-  clickSound.play();
-  if (previewFruit) {
-    World.remove(world, previewFruit);
-  }
-  if (isMobileDevice) {
-    setTimeout(function(){
-      addPreviewFruit(250);
-    },800);
-  }
-  disableGameOver = true;
 
-  setTimeout(() => {
-    disableGameOver = false;
-  }, 1000);
+  if (event.button === 0) {
+    
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+
+    if (previewFruit) {
+        World.remove(world, previewFruit);
+    }
+    
+    addFruit(mouseX);
+    clickSound.play();
+
+    if (previewFruit) {
+        World.remove(world, previewFruit);
+    }
+    if (isMobileDevice) {
+      setTimeout(function(){
+        addPreviewFruit(250);
+      },800);
+    }
+    disableGameOver = true;
+
+    setTimeout(() => {
+      disableGameOver = false;
+    }, 1000);
+  } else if (event.button === 2) {
+    holdFruit()
+    event.preventDefault();
+  }
 });
+
+// 오른쪽 클릭 시 기본적으로 표시되는 컨텍스트 메뉴를 방지하기 위한 리스너입니다.
+document.addEventListener('contextmenu', function(event) {
+  event.preventDefault();
+}, false);
+
 
 Events.on(mouseConstraint, 'mousemove', function (e) {
 
