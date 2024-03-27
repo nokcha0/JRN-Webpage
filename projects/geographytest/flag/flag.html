@@ -1,18 +1,65 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geography Test - Flag</title>
+    <title>Geography Test - Flags</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="../../../CSS/back.css">  
+
 </head>
 <body>
-    <div id="quiz-container">
-        <img id="flag-img" src="" alt="Country Flag">
-        <input type="text" id="answer-input" placeholder="Type here">
-        <button id="submit-btn">></button>
-        <p id="result"></p>
+  <a href="../geographytest.html" class="back-button"></a>
+    <div class="start_btn"><button>Start</button></div>
+
+    <div class="info_box">
+        <div class="buttons">
+            <button class="quit">Exit Quiz</button>
+            <button class="restart">Continue</button>
+        </div>
     </div>
+
+    <!-- Quiz Box -->
+    <div class="quiz_box">
+        <header>
+            <div class="title">Flag Test</div>
+            <div class="timer">
+                <div class="time_left_txt">Time Left</div>
+                <div class="timer_sec">15</div>
+            </div>
+            <div class="time_line"></div>
+        </header>
+        <section>
+            <div class="score_display">Score: 0</div>
+            <img id="flag" class="flag-image" src="" alt="Flag" style="width: 400px; height: auto;">
+            <div class="option_list">
+            </div>
+        </section>
+
+        <footer>
+            <div class="total_que">
+            </div>
+            <button class="next_btn">Next</button>
+        </footer>
+    </div>
+
+    <div class="result_box">
+        <div class="icon">
+            <i class="fas fa-crown"></i>
+        </div>
+        <div class="complete_text">Test Completed</div>
+        <div class="score_text">
+        </div>
+        <div class="buttons">
+            <button class="restart">Replay Quiz</button>
+            <button class="quit">Quit Quiz</button>
+        </div>
+    </div>
+
+    <script src="countries.js"></script>
     <script src="script.js"></script>
+
 </body>
 </html>
