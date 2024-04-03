@@ -255,6 +255,7 @@ section .option_list .option .icon{
 }
 
 .flag-image {
+    border: 5px solid #969696;
     display: block; /* Allows margin auto to center the image */
     margin: 20px auto; /* Centers the image horizontally within its container */
 }

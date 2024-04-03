@@ -138,18 +138,8 @@ function showResult() {
     quiz_box.classList.remove("activeQuiz");
     result_box.classList.add("activeResult");
     const scoreText = result_box.querySelector(".score_text");
-    if (userScore > 3) {
-        let scoreTag = '<span>and congrats! , You got <p>' + userScore + '</p> out of <p>' + countries.length + '</p></span>';
-        scoreText.innerHTML = scoreTag;
-    }
-    else if (userScore > 1) {
-        let scoreTag = '<span>and nice , You got <p>' + userScore + '</p> out of <p>' + countries.length + '</p></span>';
-        scoreText.innerHTML = scoreTag;
-    }
-    else {
-        let scoreTag = '<span>and sorry , You got only <p>' + userScore + '</p> out of <p>' + countries.length + '</p></span>';
-        scoreText.innerHTML = scoreTag;
-    }
+    let scoreTag = '<span><p>' + userScore + '</p> out of <p>' + countries.length + '</p></span>';
+    scoreText.innerHTML = scoreTag;
 }
 
 next_btn.onclick = () => {
