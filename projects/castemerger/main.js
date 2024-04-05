@@ -1,66 +1,75 @@
 const {
-    Bodies, Body, Engine, Events, Render, Runner, World, Mouse, MouseConstraint
-  } = Matter;
+  Bodies, Body, Engine, Events, Render, Runner, World, Mouse, MouseConstraint
+} = Matter;
+
+import { FRUITS_BASE } from "./fruits.js";
+
+let FRUITS = FRUITS_BASE;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBE6HxPaVPvRwXEuPiWB4UZ3Y934yMxmHc",
+  authDomain: "castemerger.firebaseapp.com",
+  projectId: "castemerger",
+  storageBucket: "castemerger.appspot.com",
+  messagingSenderId: "762085725168",
+  appId: "1:762085725168:web:87ad7c7d4cda5ba110c335",
+  measurementId: "G-N3GPLJXTKN"
+};
+
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+const db = firebase.firestore();
+
+const engine = Engine.create();
+const render = Render.create({
+  engine,
+  element: document.body,
+  options: {
+      wireframes: false,
+      background: "#F7F4C8",
+      width: 500,
+      height: 550,
+  }
+});
+render.canvas.id = 'canvas';
+
+const world = engine.world;
+
+const leftWall = Bodies.rectangle(15, 375, 30, 750, {  
+  isStatic: true,
+  render: { fillStyle: "#9b9b9b" }
+});
+
+const rightWall = Bodies.rectangle(485, 375, 30, 750, { 
+  isStatic: true,
+  render: { fillStyle: "#9b9b9b" }
+});
+
+const ground = Bodies.rectangle(250, 540, 500, 40, {  //540
+  isStatic: true,
+  render: { fillStyle: "#9b9b9b" }
+});
+
+const topLine = Bodies.rectangle(250, 150, 500, 2, { 
+  name: "topLine",
+  isStatic: true,
+  isSensor: true,
+  render: { fillStyle: "#9b9b9b" }
+})
+
+World.add(world, [leftWall, rightWall, ground, topLine]);
+
+Render.run(render);
+
+
+(function run() {
+  const fixedDeltaTime = 1000 / 120; 
   
-  import { FRUITS_BASE } from "./fruits.js";
+  Engine.update(engine, fixedDeltaTime); 
   
-  let FRUITS = FRUITS_BASE;
-  
-  const firebaseConfig = {
-    apiKey: "AIzaSyBE6HxPaVPvRwXEuPiWB4UZ3Y934yMxmHc",
-    authDomain: "castemerger.firebaseapp.com",
-    projectId: "castemerger",
-    storageBucket: "castemerger.appspot.com",
-    messagingSenderId: "762085725168",
-    appId: "1:762085725168:web:87ad7c7d4cda5ba110c335",
-    measurementId: "G-N3GPLJXTKN"
-  };
-  
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-  const db = firebase.firestore();
-  
-  const engine = Engine.create();
-  const render = Render.create({
-    engine,
-    element: document.body,
-    options: {
-        wireframes: false,
-        background: "#F7F4C8",
-        width: 500,
-        height: 550,
-    }
-  });
-  render.canvas.id = 'canvas';
-  
-  const world = engine.world;
-  
-  const leftWall = Bodies.rectangle(15, 375, 30, 750, {  
-    isStatic: true,
-    render: { fillStyle: "#9b9b9b" }
-  });
-  
-  const rightWall = Bodies.rectangle(485, 375, 30, 750, { 
-    isStatic: true,
-    render: { fillStyle: "#9b9b9b" }
-  });
-  
-  const ground = Bodies.rectangle(250, 540, 500, 40, {  //540
-    isStatic: true,
-    render: { fillStyle: "#9b9b9b" }
-  });
-  
-  const topLine = Bodies.rectangle(250, 150, 500, 2, { 
-    name: "topLine",
-    isStatic: true,
-    isSensor: true,
-    render: { fillStyle: "#9b9b9b" }
-  })
-  
-  World.add(world, [leftWall, rightWall, ground, topLine]);
-  
-  Render.run(render);
-  Runner.run(engine);
+  requestAnimationFrame(run); 
+})();
+
   
   let currentBody = null;
   let currentFruit = null;
