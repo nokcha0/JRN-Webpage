@@ -1,81 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Perfect Pitch Test</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="../../CSS/back.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <a href="../projectslide/project.html" class="back-button"></a>
-
-    <div class="container"></div>
-    <div class="score"></div>
-    <div class="timer"></div>
-
-    <div class="menu-btn" id="open-leaderboard">
-        <i class="fas fa-bars"></i>
-      </div>      
-
-    <div id="leaderboard" class="side-bar">
-        <div class="close-btn">
-          <i class="fas fa-times"></i>
-        </div>
-        <header>
-            <h1 id="leaderboard-title">Leaderboard</h1>
-        </header>
-
-        <div class="username-input">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" autocomplete="off">
-            <button id="submit-username">Submit</button>
-          </div>
-
-        <div class="menu">
-            <ul id="leaderboard-list"></ul>
-        </div>
-
-          
+<head>
+  <meta charset="utf-8">
+  <title>Perfect Pitch Test</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../CSS/back.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.5/Pizzicato.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <a href="../projectslide/project.html" class="back-button"></a>
+  <div class="container"></div>
+  <div class="score"></div>
+  <div class="timer"></div>
+  <div class="menu-btn" id="open-leaderboard">
+    <i class="fas fa-bars"></i>
+  </div>      
+  <div id="leaderboard" class="side-bar">
+    <div class="close-btn">
+      <i class="fas fa-times"></i>
     </div>
-
-    <div class="header-container">
-        <h1>PERFECT PITCH TEST</h1>
-        <p id="score" class="score">Score: 0</p>
+    <header>
+      <h1 id="leaderboard-title">Leaderboard</h1>
+    </header>
+    <div class="username-input">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" autocomplete="off">
+      <button id="submit-username">Submit</button>
     </div>
-
-    <div class="wrapper">
-      <header>
-        <div class="column keys-checkbox">
-          <span>Show Notes</span><input type="checkbox" checked>
-        </div>
-        <button id="hear-again">Hear Again</button>
-      </header>
-      <ul class="piano-keys">
-        <li class="key white" data-key="c"><span>C</span></li>
-        <li class="key black" data-key="c-"><span>C#</span></li>
-        <li class="key white" data-key="d"><span>D</span></li>
-        <li class="key black" data-key="d-"><span>D#</span></li>
-        <li class="key white" data-key="e"><span>E</span></li>
-        <li class="key white" data-key="f"><span>F</span></li>
-        <li class="key black" data-key="f-"><span>F#</span></li>
-        <li class="key white" data-key="g"><span>G</span></li>
-        <li class="key black" data-key="g-"><span>G#</span></li>
-        <li class="key white" data-key="a"><span>A</span></li>
-        <li class="key black" data-key="a-"><span>A#</span></li>
-        <li class="key white" data-key="b"><span>B</span></li>
-      </ul>
-      <button id="start">Start <span id="timer"></span></button>
-      <div class="checkbox-wrapper-10">
-        <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
-        <label class="tgl-btn" data-tg-off="HardMode" data-tg-on="EasyMode" for="cb5" for="hardmodeCheckbox"></label>
+    <div class="menu">
+      <ul id="leaderboard-list"></ul>
+    </div>
+  </div>
+  <div class="header-container">
+    <h1>PERFECT PITCH TEST</h1>
+    <p id="score" class="score">Score: 0</p>
+  </div>
+  <div class="wrapper">
+    <header>
+      <div class="column keys-checkbox">
+        <span>Show Notes</span><input type="checkbox" checked>
       </div>
+      <button id="hear-again">Hear Again</button>
+    </header>
+    <ul class="piano-keys">
+      <li class="key white" data-key="c"><span>C</span></li>
+      <li class="key black" data-key="c-"><span>C#</span></li>
+      <li class="key white" data-key="d"><span>D</span></li>
+      <li class="key black" data-key="d-"><span>D#</span></li>
+      <li class="key white" data-key="e"><span>E</span></li>
+      <li class="key white" data-key="f"><span>F</span></li>
+      <li class="key black" data-key="f-"><span>F#</span></li>
+      <li class="key white" data-key="g"><span>G</span></li>
+      <li class="key black" data-key="g-"><span>G#</span></li>
+      <li class="key white" data-key="a"><span>A</span></li>
+      <li class="key black" data-key="a-"><span>A#</span></li>
+      <li class="key white" data-key="b"><span>B</span></li>
+    </ul>
+    <button id="start">Start <span id="timer"></span></button>
+    <div class="checkbox-wrapper-10">
+      <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
+      <label class="tgl-btn" data-tg-off="HardMode" data-tg-on="EasyMode" for="cb5" for="hardmodeCheckbox"></label>
     </div>
-    <script src="script.js"></script>
-  </body>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>

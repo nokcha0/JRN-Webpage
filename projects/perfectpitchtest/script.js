@@ -1,3 +1,12 @@
+if (typeof Pizzicato === 'undefined') {
+    console.error('Pizzicato is not loaded!');
+} else {
+    console.log('Pizzicato is loaded!');
+}
+
+// Your existing script.js code...
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyCTiCooEYFDC73puWpUK3b5unAO3IK-wys",
     authDomain: "perfectpitchtest-50f59.firebaseapp.com",
@@ -34,12 +43,19 @@ let randomOctave = 4;
 let hardmode = false;
 
 const playTune = (noteWithOctave, correct = true) => {
-    let audioFileName = `tunes/${noteWithOctave}.mp3`; 
-    let audio = new Audio(audioFileName);
-    audio.volume = 1;
+    let [note, octave] = [noteWithOctave.slice(0, -1), noteWithOctave.slice(-1)];
+    let frequency = getFrequency(note, octave);
+    let audio = new Pizzicato.Sound({ 
+        source: 'wave', 
+        options: { frequency: frequency }
+    });
     audio.play();
+    setTimeout(() => {
+        audio.stop();
+    }, 500);
+
     dataKey = noteWithOctave.slice(0, -1);
-    console.log("dataKey octave false: " + dataKey);
+    console.log("dataKey: " + dataKey);
 
     if (firstKeyPlay){
         firstKeyPlay = false;
@@ -55,6 +71,17 @@ const playTune = (noteWithOctave, correct = true) => {
     }
     return audio;
 }
+
+
+const getFrequency = (note, octave) => {
+    const A4 = 440;
+    const notes = ['c', 'c-', 'd', 'd-', 'e', 'f', 'f-', 'g', 'g-', 'a', 'a-', 'b'];
+    const semitone = notes.indexOf(note);
+    const A4index = 9; // 'a' is the 10th note, 0-based index is 9
+    const semitonesFromA4 = (octave - 4) * 12 + (semitone - A4index);
+    return A4 * Math.pow(2, semitonesFromA4 / 12);
+}
+
 
 const handleEndGame = () => {
     gameStarted = false;
@@ -74,28 +101,36 @@ const handleEndGame = () => {
 
 const randomKey = () => {
     const randomNote = notes[Math.floor(Math.random() * notes.length)];
-    if(hardmode) {
+    if (!hardmode) {
+        randomOctave = 4; // Easy mode: always use octave 4
+    } else {
         randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
     }
     currentKey = `${randomNote}${randomOctave}`;
-    console.log("Random Key octave true: " + currentKey);
+    console.log("Random Key: " + currentKey);
     firstKeyPlay = true;
     currentAudio = playTune(currentKey, true);
 }
 
 const handleKeyPress = (e) => {
-    if(!gameStarted) return;
-    keyPressed = e.target.dataset.key + currentKey.slice(-1);
-    console.log("pressedKey octave true: " + keyPressed);
-    console.log("currentKey octave true: " + currentKey);
-    if(keyPressed === currentKey) {
+    if (!gameStarted) return;
+    const pressedKey = e.target.dataset.key;
+    let keyPressed;
+    if (!hardmode) {
+        keyPressed = pressedKey + '4'; // Easy mode: always use octave 4
+    } else {
+        keyPressed = pressedKey + currentKey.slice(-1); // Hard mode: use current octave
+    }
+    console.log("pressedKey: " + keyPressed);
+    console.log("currentKey: " + currentKey);
+    if (keyPressed === currentKey) {
         playTune(currentKey, true);
-        score++; 
+        score++;
         scoreDisplay.textContent = `Score: ${score}`;
-        scoreDisplay.classList.add("green-flash"); 
+        scoreDisplay.classList.add("green-flash");
         setTimeout(() => {
-            scoreDisplay.classList.remove("green-flash"); 
-            randomKey();    
+            scoreDisplay.classList.remove("green-flash");
+            randomKey();
         }, 1000);
     } else {
         playTune(keyPressed, false);
@@ -107,6 +142,8 @@ const handleKeyPress = (e) => {
         }
     }
 }
+
+
 
 document.addEventListener('click', function(e) {
     if (e.target.matches('.piano-keys .key')) {
