@@ -1,12 +1,3 @@
-if (typeof Pizzicato === 'undefined') {
-    console.error('Pizzicato is not loaded!');
-} else {
-    console.log('Pizzicato is loaded!');
-}
-
-// Your existing script.js code...
-
-
 const firebaseConfig = {
     apiKey: "AIzaSyCTiCooEYFDC73puWpUK3b5unAO3IK-wys",
     authDomain: "perfectpitchtest-50f59.firebaseapp.com",
@@ -16,197 +7,190 @@ const firebaseConfig = {
     appId: "1:52491167272:web:b1481b283ebb97e545f71d"
   };
 
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-const db = firebase.firestore();
-
-const checkbox = document.getElementById("cb5");
-const pianoKeys = document.querySelectorAll(".piano-keys .key"),
-keysCheckbox = document.querySelector(".keys-checkbox input"),
-hearAgainButton = document.querySelector("#hear-again"),
-startButton = document.querySelector("#start"),
-scoreDisplay = document.querySelector("#score");
-
-let notes = ['c', 'c-', 'd', 'd-', 'e', 'f', 'f-', 'g', 'g-', 'a', 'a-', 'b'];
-let octaves = [3, 4, 5];  
-
-
-let currentKey = null;
-let gameStarted = false;
-let currentAudio = null;
-let score = 0;
-let timer = 0;
-let interval = null;
-let isGameOver = false; 
-let isScoreSubmitted = false;
-let randomOctave = 4;
-let hardmode = false;
-
-const playTune = (noteWithOctave, correct = true) => {
-    let [note, octave] = [noteWithOctave.slice(0, -1), noteWithOctave.slice(-1)];
-    let frequency = getFrequency(note, octave);
-    let audio = new Pizzicato.Sound({ 
-        source: 'wave', 
-        options: { frequency: frequency }
-    });
-    audio.play();
-    setTimeout(() => {
-        audio.stop();
-    }, 500);
-
-    dataKey = noteWithOctave.slice(0, -1);
-    console.log("dataKey: " + dataKey);
-
-    if (firstKeyPlay){
-        firstKeyPlay = false;
-        return audio;
-    }
-
-    const clickedKey = document.querySelector(`[data-key="${dataKey}"]`);
-    if (clickedKey) {
-        clickedKey.classList.add(correct ? "correct" : "wrong");
-        setTimeout(() => {
-            clickedKey.classList.remove("correct", "wrong");
-        }, 150);
-    }
-    return audio;
-}
-
-
-const getFrequency = (note, octave) => {
-    const A4 = 440;
-    const notes = ['c', 'c-', 'd', 'd-', 'e', 'f', 'f-', 'g', 'g-', 'a', 'a-', 'b'];
-    const semitone = notes.indexOf(note);
-    const A4index = 9; // 'a' is the 10th note, 0-based index is 9
-    const semitonesFromA4 = (octave - 4) * 12 + (semitone - A4index);
-    return A4 * Math.pow(2, semitonesFromA4 / 12);
-}
-
-
-const handleEndGame = () => {
-    gameStarted = false;
-    startButton.disabled = true; 
-    startButton.textContent = 'Time Left: 0'; 
-    startButton.classList.add('flashing'); 
-    pianoKeys.forEach(key => {
-        key.removeEventListener('click', handleKeyPress);
-    });
-    isGameOver = true
-    displayLeaderboard(hardmode);
-    leaderboard.classList.add('active');
-    const leaderboardButton = document.getElementById('open-leaderboard'); 
-    leaderboardButton.style.visibility = 'hidden';
-
-}
-
-const randomKey = () => {
-    const randomNote = notes[Math.floor(Math.random() * notes.length)];
-    if (!hardmode) {
-        randomOctave = 4; // Easy mode: always use octave 4
-    } else {
-        randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
-    }
-    currentKey = `${randomNote}${randomOctave}`;
-    console.log("Random Key: " + currentKey);
-    firstKeyPlay = true;
-    currentAudio = playTune(currentKey, true);
-}
-
-const handleKeyPress = (e) => {
-    if (!gameStarted) return;
-    const pressedKey = e.target.dataset.key;
-    let keyPressed;
-    if (!hardmode) {
-        keyPressed = pressedKey + '4'; // Easy mode: always use octave 4
-    } else {
-        keyPressed = pressedKey + currentKey.slice(-1); // Hard mode: use current octave
-    }
-    console.log("pressedKey: " + keyPressed);
-    console.log("currentKey: " + currentKey);
-    if (keyPressed === currentKey) {
-        playTune(currentKey, true);
-        score++;
-        scoreDisplay.textContent = `Score: ${score}`;
-        scoreDisplay.classList.add("green-flash");
-        setTimeout(() => {
-            scoreDisplay.classList.remove("green-flash");
-            randomKey();
-        }, 1000);
-    } else {
-        playTune(keyPressed, false);
-        timer -= 5;
-        startButton.textContent = `Time left: ${timer}`;
-        if (timer <= 0) {
-            clearInterval(interval);
-            handleEndGame();
-        }
-    }
-}
-
-
-
-document.addEventListener('click', function(e) {
-    if (e.target.matches('.piano-keys .key')) {
-        handleKeyPress(e);
-    }
-});
-
-const showHideNotes = () => {
-
-    pianoKeys.forEach(key => {
-      
-      key.querySelector("span").classList.toggle("hide");
-    
-    });
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  const db = firebase.firestore();
   
-  }
-
-keysCheckbox.addEventListener("change", showHideNotes);
-
-hearAgainButton.addEventListener('click', () => {
-    if(gameStarted && currentAudio) {
-        currentAudio.currentTime = 0;
-        currentAudio.play();
-    }
-});
-
-startButton.addEventListener('click', () => {
-    checkbox.disabled = true;
-    gameStarted = true;
-    startButton.disabled = true;
-    startButton.classList.remove('flashing');
-    randomKey();
-    score = 0;
-    scoreDisplay.textContent = `Score: ${score}`;
-    timer = 60;
-    startButton.textContent = `Time left: ${timer}`;
-    interval = setInterval(() => {
-        timer--;
-        startButton.textContent = `Time left: ${timer}`;
-        if (timer <= 0) {
-            handleEndGame();
-            clearInterval(interval);
-        }
-    }, 1000);
-
-});
-
-checkbox.addEventListener('change', function(event) {
-
-    hardmode = !event.target.checked;
-    console.log('Hard Mode:', hardmode);
-    if(hardmode){
-        displayLeaderboard(true);
-        const leaderboard = document.getElementById('leaderboard');
-        leaderboard.classList.remove('active');
-    }
-    else{
-        displayLeaderboard(false);
-        const leaderboard = document.getElementById('leaderboard');
-        leaderboard.classList.remove('active');
-    }
+  const checkbox = document.getElementById("cb5");
+  const pianoKeys = document.querySelectorAll(".piano-keys .key"),
+      keysCheckbox = document.querySelector(".keys-checkbox input"),
+      hearAgainButton = document.querySelector("#hear-again"),
+      startButton = document.querySelector("#start"),
+      scoreDisplay = document.querySelector("#score");
   
+  let notes = ['c', 'cs', 'd', 'ds', 'e', 'f', 'fs', 'g', 'gs', 'a', 'as', 'b'];
+  let octaves = [3, 4, 5];  
+  
+  let currentKey = null;
+  let gameStarted = false;
+  let score = 0;
+  let timer = 0;
+  let interval = null;
+  let isGameOver = false; 
+  let isScoreSubmitted = false;
+  let randomOctave = 4;
+  let hardmode = false;
+  let firstKeyPlay = false;
+
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  let currentAudio = null;
+  
+  const resetAudioContext = () => {
+      if (currentAudio) {
+          currentAudio.stop();
+          currentAudio.disconnect();
+      }
+  };
+  
+  const playTune = async (noteWithOctave, correct = true, highlight = false) => {
+      resetAudioContext();
+  
+      const dataKey = noteWithOctave.slice(0, -1);
+      const octave = noteWithOctave.slice(-1);
+      const audioFileName = `tunes/${dataKey}.mp3`;
+  
+      const response = await fetch(audioFileName);
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  
+      const source = audioContext.createBufferSource();
+      source.buffer = audioBuffer;
+  
+      const playbackRate = Math.pow(2, (octave - 4)); // Calculate playback rate for different octaves
+      source.playbackRate.value = playbackRate;
+  
+      source.connect(audioContext.destination);
+      source.start(0);
+      currentAudio = source;
+      console.log("Playing note: " + dataKey + octave);
+  
+      if (firstKeyPlay) {
+          firstKeyPlay = false;
+          return source;
+      }
+  
+      if (highlight) {
+          highlightKey(dataKey, correct);
+      }
+      return source;
+  };
+  
+  const highlightKey = (dataKey, correct) => {
+      const clickedKey = document.querySelector(`[data-key="${dataKey}"]`);
+      if (clickedKey) {
+          clickedKey.classList.add(correct ? "correct" : "wrong");
+          setTimeout(() => {
+              clickedKey.classList.remove("correct", "wrong");
+          }, 150);
+      }
+  };
+  
+  const randomKey = () => {
+      const randomNote = notes[Math.floor(Math.random() * notes.length)];
+      if (hardmode) {
+          randomOctave = octaves[Math.floor(Math.random() * octaves.length)];
+      }
+      currentKey = `${randomNote}${randomOctave}`;
+      console.log("Random Key: " + currentKey);
+      firstKeyPlay = true; // Initialize only here
+      playTune(currentKey, true, false); // Play the generated key
+  };
+  
+  const handleKeyPress = (e) => {
+      if (!gameStarted) return;
+      const keyPressed = e.target.dataset.key + currentKey.slice(-1);
+      console.log("pressedKey: " + keyPressed);
+      console.log("currentKey: " + currentKey);
+      if (keyPressed === currentKey) {
+          playTune(currentKey, true, true);
+          score++;
+          scoreDisplay.textContent = `Score: ${score}`;
+          scoreDisplay.classList.add("green-flash");
+          setTimeout(() => {
+              scoreDisplay.classList.remove("green-flash");
+              randomKey();
+          }, 1000);
+      } else {
+          playTune(keyPressed, false, true);
+          timer -= 5;
+          startButton.textContent = `Time left: ${timer}`;
+          if (timer <= 0) {
+              clearInterval(interval);
+              handleEndGame();
+          }
+      }
+  };
+  
+  document.addEventListener('click', function(e) {
+      if (e.target.matches('.piano-keys .key')) {
+          handleKeyPress(e);
+      }
   });
+  
+  const showHideNotes = () => {
+      pianoKeys.forEach(key => {
+          key.querySelector("span").classList.toggle("hide");
+      });
+  };
+  
+  keysCheckbox.addEventListener("change", showHideNotes);
+  
+  hearAgainButton.addEventListener('click', () => {
+      if (gameStarted && currentAudio) {
+          currentAudio.stop(0);
+          playTune(currentKey, true, false);
+      }
+  });
+  
+  startButton.addEventListener('click', () => {
+      checkbox.disabled = true;
+      gameStarted = true;
+      startButton.disabled = true;
+      startButton.classList.remove('flashing');
+      score = 0;
+      scoreDisplay.textContent = `Score: ${score}`;
+      timer = 60;
+      startButton.textContent = `Time left: ${timer}`;
+      interval = setInterval(() => {
+          timer--;  // Decrement by 1
+          startButton.textContent = `Time left: ${timer}`;
+          if (timer <= 0) {
+              handleEndGame();
+              clearInterval(interval);
+          }
+      }, 1000);  // Interval set to 1000ms or 1 second
+      randomKey(); // Generate random key only once here
+  });
+  
+  checkbox.addEventListener('change', function(event) {
+      hardmode = !event.target.checked;
+      console.log('Hard Mode:', hardmode);
+      if (hardmode) {
+          displayLeaderboard(true);
+          const leaderboard = document.getElementById('leaderboard');
+          leaderboard.classList.remove('active');
+      } else {
+          displayLeaderboard(false);
+          const leaderboard = document.getElementById('leaderboard');
+          leaderboard.classList.remove('active');
+      }
+  });
+  
+  const handleEndGame = () => {
+      gameStarted = false;
+      startButton.disabled = true;
+      startButton.textContent = 'Time Left: 0';
+      startButton.classList.add('flashing');
+      pianoKeys.forEach(key => {
+          key.removeEventListener('click', handleKeyPress);
+      });
+      isGameOver = true;
+      displayLeaderboard(hardmode);
+      leaderboard.classList.add('active');
+      const leaderboardButton = document.getElementById('open-leaderboard');
+      leaderboardButton.style.visibility = 'hidden';
+  };
+  
 
 function updateLeaderboard(hardMode) {
     if (!isGameOver) {
