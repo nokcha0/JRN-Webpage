@@ -1,206 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 * {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-}
-html, body {
-    background-image: url('images/bg.jpg');
-    height: 100%;
-}
-body {
-    padding: 100px 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
 }
 
-.app{
-    background: #181A1B;
-    width: 90%;
-    max-width: 700px;
-    margin: 100px auto 0;
-    border-radius: 10px;
-    padding: 30px;
+html, body {
+  background-image: url('images/bg.jpg');
+  height: 100%;
 }
-.app h1{
-    font-size: 40px;
-    color: #fff;
-    font-weight: 600;
-    border-bottom: 1px solid #333;
-    padding-bottom: 30px;
+
+body {
+  padding: 20px 0;
 }
-.app h2{
-  font-size: 20px;
+
+.app {
+  background: #181A1B;
+  width: 90%;
+  max-width: 900px; /* Widened the container */
+  margin: 20px auto;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.app h1 {
+  font-size: 40px;
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+}
+
+.app h2 {
+  font-size: 24px; /* Increased font size */
+  color: #fff;
+  font-weight: 500;
   margin-top: 10px;
 }
 
-#answer{
+#answer {
   color: white;
 }
 
-.quiz{
-    padding: 20px 0;
+.quiz {
+  padding: 20px 0;
 }
-.quiz h2{
-    padding: 10px 0;
+
+.quiz h2 {
+  padding: 10px 0;
+  text-align: center; /* Centered the Correct/Incorrect text */
 }
+
 .quiz img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    max-width: 690;
-    height: 300px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  max-width: 690px; /* Set the max width */
+  height: 300px; /* Set the height */
 }
 
 #next-btn:hover, #quiz-next-btn:hover, #restart-btn:hover {
-    background: #002e79;
-    color: #fff;
-}
-#next-btn, #quiz-next-btn{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    background: #0048bd;
-    color: #fff;
-    font-weight: 900;
-    width: 50px;
-    border: 0;
-    padding: 10px;
-    margin: 20px auto 0;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
-    text-shadow: -1px 0 rgb(255, 255, 255), 0 1px rgb(255, 255, 255), 1px 0 rgb(255, 255, 255), 0 -1px rgb(255, 255, 255);
+  background: #002e79;
+  color: #fff;
 }
 
-#restart-btn{
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    background: #0048bd;
-    color: #fff;
-    font-weight: 900;
-    width: auto;
-    border: 0;
-    padding: 10px;
-    margin: 20px auto 0;
-    border-radius: 4px;
-    cursor: pointer;
-    display: block;
+#next-btn, #quiz-next-btn {
+  font-size: 20px;
+  background: #0048bd;
+  color: #fff;
+  font-weight: 700;
+  width: 50px;
+  border: 0;
+  padding: 10px;
+  margin: 20px auto 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  text-shadow: -1px 0 rgb(255, 255, 255), 0 1px rgb(255, 255, 255), 1px 0 rgb(255, 255, 255), 0 -1px rgb(255, 255, 255);
+}
+
+#restart-btn {
+  font-size: 20px;
+  background: #0048bd;
+  color: #fff;
+  font-weight: 700;
+  width: auto;
+  border: 0;
+  padding: 10px;
+  margin: 20px auto 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
 }
 
 #button-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #score-container {
   text-align: center;
   font-size: 2em;
-  margin-bottom: 10px;
+  margin: 10px 0;
   color: #fff;
 }
 
 input {
-    background: 0;
-    border: 0;
-    outline: none;
-    width: 80vw;
-    max-width: 400px;
-    font-size: 1.5em;
-    transition: padding 0.3s 0.2s ease;
-  
-    &:focus {
-      padding-bottom: 5px;
-    }
-  
-    &:focus + .line {
-      &:after {
-        transform: scaleX(1);
-      }
-    }
-  }
-  
-  .field {
-    position: relative;
-    margin-top: 40px;
-  
-    .line {
-      width: 100%;
-      height: 3px;
-      position: absolute;
-      bottom: -8px;
-      background: #bdc3c7;
-  
-      &:after {
-        content: " ";
-        position: absolute;
-        float: right;
-        width: 100%;
-        height: 3px;
-        
-        transform: scalex(0);
-        transition: transform 0.3s ease;
-        
-        background: #1abc9c;
-      }
-    }
-  }
-  
-  @keyframes progress {
-    0% { --percentage: 0; }
-    100% { --percentage: var(--value); }
-  }
-  
-  @property --percentage {
-    syntax: '<number>';
-    inherits: true;
-    initial-value: 0;
-  }
-  
-  [role="progressbar"] {
-    --percentage: var(--value);
-    --primary: #369;
-    --secondary: #adf;
-    --size: 200px; /* Reduced size */
-    animation: progress 2s 0.5s forwards;
-    width: var(--size);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    margin: 50px auto 50px;
-  }
-  
-  [role="progressbar"]::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: conic-gradient(var(--primary) calc(var(--percentage) * 1%), var(--secondary) 0);
-    mask: radial-gradient(white 55%, transparent 0);
-    mask-mode: alpha;
-    -webkit-mask: radial-gradient(#0000 55%, #000 0);
-    -webkit-mask-mode: alpha;
-  }
-  
-  [role="progressbar"]::after {
-    counter-reset: percentage var(--value);
-    content: counter(percentage) ' IQ';
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: calc(var(--size) / 5);
-    color: var(--primary);
-    
-  }
-  
-  .progress-bar {
-    width: 60%; 
-    height: 20px;
-    background: lightgray;
-    --value: 0;
-    background: linear-gradient(to right, lime 0%, lime var(--value), lightgray var(--value), lightgray);
-    margin: 40px auto 40px; 
-  }
+  background: 0;
+  border: 0;
+  outline: none;
+  width: 80vw;
+  max-width: 400px;
+  font-size: 1.5em;
+  transition: padding 0.3s 0.2s ease;
+}
+
+input:focus {
+  padding-bottom: 5px;
+}
+
+input:focus + .line:after {
+  transform: scaleX(1);
+}
+
+.field {
+  position: relative;
+  margin-top: 40px;
+}
+
+.field .line {
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  bottom: -8px;
+  background: #bdc3c7;
+}
+
+.field .line:after {
+  content: " ";
+  position: absolute;
+  float: right;
+  width: 100%;
+  height: 3px;
+  transform: scalex(0);
+  transition: transform 0.3s ease;
+  background: #1abc9c;
+}
+
+@keyframes progress {
+  0% { --percentage: 0; }
+  100% { --percentage: var(--value); }
+}
+
+@property --percentage {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+[role="progressbar"] {
+  --percentage: var(--value);
+  --primary: #369;
+  --secondary: #adf;
+  --size: 200px;
+  animation: progress 2s 0.5s forwards;
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  margin: 50px auto;
+}
+
+[role="progressbar"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(var(--primary) calc(var(--percentage) * 1%), var(--secondary) 0);
+  mask: radial-gradient(white 55%, transparent 0);
+  mask-mode: alpha;
+  -webkit-mask: radial-gradient(#0000 55%, #000 0);
+  -webkit-mask-mode: alpha;
+}
+
+[role="progressbar"]::after {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) ' IQ';
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--primary);
+}
+
+.progress-bar {
+  width: 60%; 
+  height: 20px;
+  background: lightgray;
+  --value: 0;
+  background: linear-gradient(to right, lime 0%, lime var(--value), lightgray var(--value), lightgray);
+  margin: 40px auto;
+}

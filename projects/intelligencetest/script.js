@@ -1,23 +1,26 @@
-const firstQuestion = 'Apple';
-const questions = [
-    'Sigma',
-    'water',
-    'Ukulele',
-    'Yamaha F325D Acoustic Guitar',
+const predeterminedQuestions = [
+    'Apple',
     'Mcdonald\'s vanilla soft serve cone',
     'Chicken',
-    'crimson',
     'Math',
-    'ABC',
+    'Yamaha F325D Acoustic Guitar',
+    'woman',
+    'noon',
+    'crimson',
     'american',
-    'ideal gas law',
+    'Lenovo IdeaPad 1i 14.0 HD Laptop - Intel Celeron N4020, 4GB RAM, 64GB eMMC, Windows 11 S Mode - Cloud Grey (82V6S00000)'
+];
+
+const additionalQuestions = [
+    'Ukulele',
+    'dihydrogen monoxide',
+    'Sigma',
     'integral',
     'north korea',
     'number',
     'black oppression',
     'graph',
     'disabled',
-    'woman',
     'tokyo',
     'europe',
     'alaska',
@@ -28,8 +31,13 @@ const questions = [
     'haram',
     'Sus scrofa domesticus',
     'basketball player',
-    'Lenovo IdeaPad 1i 14.0 HD Laptop - Intel Celeron N4020, 4GB RAM, 64GB eMMC, Windows 11 S Mode - Cloud Grey (82V6S00000)',
-    'LGBTQQIAAPPO2S'
+    'plane',
+    'Xi Ursae Majoris',
+    'Lower Left Abdominal Pain',
+    'man',
+    'Escherichia coli',
+    'ideal gas law'
+
 ];
 
 const exceptionList = {
@@ -39,7 +47,7 @@ const exceptionList = {
 
 function preloadImages() {
     const preloadContainer = document.getElementById('preload-container');
-    questions.forEach(question => {
+    [...predeterminedQuestions, ...additionalQuestions].forEach(question => {
         let filename = exceptionList[question] ? exceptionList[question].filename : `${question}.jpg`;
         let img = new Image();
         img.src = `images/${filename}`;
@@ -54,29 +62,17 @@ function shuffleArray(array) {
     }
 }
 
-shuffleArray(questions);
-
 let isFirstStart = true;
 let currentQuestionIndex = 0; 
 let score = 0;
 let answerCheck = false;
+let questions = [...predeterminedQuestions];
 
 function startQuiz() {
     document.getElementById('intro').style.display = 'none';
     document.getElementById('quiz-container').style.display = 'block';
 
-    if (isFirstStart) {
-        questions.unshift(firstQuestion);
-        isFirstStart = false;
-    }
-
     loadQuestion(currentQuestionIndex);
-    if (currentQuestionIndex === 0) {
-        const appleIndex = questions.indexOf(firstQuestion);
-        if (appleIndex > -1) {
-            questions.splice(appleIndex, 1);
-        }
-    }
 }
 
 function loadQuestion(index) {
@@ -181,11 +177,15 @@ function atEnd(){
 }
 
 function restartQuiz() {
-    shuffleArray(questions);
+    shuffleArray(additionalQuestions);
+    questions = additionalQuestions.slice(0, 10);
     currentQuestionIndex = 0;
     score = 0;
     document.getElementById('end-page').style.display = 'none';
-    startQuiz();
+    document.getElementById('quiz-container').style.display = 'block';
+    document.getElementById('score').textContent = score;
+    document.getElementById('scoreTxt').textContent = 'Score: 0/0';
+    loadQuestion(currentQuestionIndex);
 }
 
 document.getElementById('quiz-next-btn').addEventListener('click', checkAnswer);
@@ -194,6 +194,15 @@ document.getElementById('quiz-form').addEventListener('submit', function(event) 
     event.preventDefault();  
     if (!answerCheck) {
         checkAnswer();
+    }
+});
+
+document.getElementById('answer').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        if (document.getElementById('answer').value.trim() !== '') {
+            checkAnswer();
+        }
     }
 });
 

@@ -6,7 +6,7 @@ windowLeftPos = new Array,
 panel,
 id;
 
-NUMBER_OF_BG = 50;
+NUMBER_OF_BG = 47;
 
 
 function adjustFullScreenSize() {
@@ -97,10 +97,15 @@ function changeBg() {
 
     document.body.style.backgroundImage = 'url(bg/' + selectedImage + ')'; 
 	document.body.style.backgroundSize = 'cover';  
+	document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundPosition = 'center center';
+    document.body.style.backgroundAttachment = 'fixed';
 }
 
 
 $(document).ready(function(){
+
+	preloadBackgroundImages();
 
 	changeBg();
 
@@ -254,6 +259,16 @@ function preloadImages(images) {
         preloadContainer.appendChild(img);
     });
 }
+
+function preloadBackgroundImages() {
+    const preloadContainer = document.getElementById('preload-container');
+    for (let i = 1; i <= NUMBER_OF_BG; i++) {
+        const img = new Image();
+        img.src = 'bg/' + i + '.jpg';
+        preloadContainer.appendChild(img);
+    }
+}
+
 
 window.onload = function() {
     preloadImages(projectImages.concat(utilityImages));
