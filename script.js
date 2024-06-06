@@ -225,3 +225,36 @@ $(document).ready(function(){
 	centerWindow(0);
 
 });
+
+//Preloading Img
+
+const projectImages = [
+    '/projects/projectslide/img/intelligencetest.jpg',
+    '/projects/projectslide/img/clickrace.jpg',
+    '/projects/projectslide/img/feifeitype.jpg',
+    '/projects/projectslide/img/colorblindtest.jpg',
+    '/projects/projectslide/img/perfectpitchtest.jpg',
+    '/projects/projectslide/img/castemerger.jpg',
+    '/projects/projectslide/img/precisiontest.jpg',
+    '/projects/projectslide/img/geographytest.jpg'
+];
+
+const utilityImages = [
+    '/projects/utilityslide/img/encdec.jpg',
+    '/projects/utilityslide/img/taja.jpg',
+    '/projects/utilityslide/img/tts.jpg',
+    '/projects/utilityslide/img/img.jpg'
+];
+
+function preloadImages(images) {
+    const preloadContainer = document.getElementById('preload-container');
+    images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        preloadContainer.appendChild(img);
+    });
+}
+
+window.onload = function() {
+    preloadImages(projectImages.concat(utilityImages));
+};

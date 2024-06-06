@@ -1,4 +1,4 @@
-const firstQuestion = 'Apple'
+const firstQuestion = 'Apple';
 const questions = [
     'Sigma',
     'water',
@@ -34,8 +34,18 @@ const questions = [
 
 const exceptionList = {
     'omega': {filename: 'omega.jpg', answer: '\u03A9'},
-    'lenny': {filename: 'lenny.jpg', answer: '\u0028\u0020\u0361\u00b0\u0020\u035c\u0296\u0020\u0361\u00b0\u0029'},
+    'lenny': {filename: 'lenny.jpg', answer: '\u0028\u0020\u0361\u00b0\u0020\u035c\u0296\u0020\u0361\u00b0\u0029'}
 };
+
+function preloadImages() {
+    const preloadContainer = document.getElementById('preload-container');
+    questions.forEach(question => {
+        let filename = exceptionList[question] ? exceptionList[question].filename : `${question}.jpg`;
+        let img = new Image();
+        img.src = `images/${filename}`;
+        preloadContainer.appendChild(img);
+    });
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -69,7 +79,6 @@ function startQuiz() {
     }
 }
 
-
 function loadQuestion(index) {
     const quiz = questions[index];
     let filename = quiz + '.jpg';
@@ -80,14 +89,14 @@ function loadQuestion(index) {
         correctAnswer = exceptionList[quiz].answer;
     }
     
-    document.getElementById('quiz-image').src = 'images/'+filename;
+    document.getElementById('quiz-image').src = 'images/' + filename;
     window.correctAnswer = correctAnswer;
     document.getElementById('answer').setAttribute("autocomplete", "off");
 }
 
 function checkAnswer() {
     if(answerCheck){
-        answerCheck=false
+        answerCheck = false;
         nextQuestion();
         return;
     }
@@ -103,14 +112,11 @@ function checkAnswer() {
         } else {
             result.innerHTML = '<span style="color:Red; font-size: 30px;">Incorrect!&nbsp;&nbsp;&nbsp;' + displayedAnswer + '</span>';
         }
-        document.getElementById('score').textContent=score;
-        document.getElementById('scoreTxt').textContent = 'Score: ' + score + '/' + Number(Number(currentQuestionIndex)+1);
-        answerCheck=true
+        document.getElementById('score').textContent = score;
+        document.getElementById('scoreTxt').textContent = 'Score: ' + score + '/' + Number(Number(currentQuestionIndex) + 1);
+        answerCheck = true;
     }
 }
-
-
-
 
 function nextQuestion() {
     document.getElementById('answer').value = ''; 
@@ -128,12 +134,13 @@ function nextQuestion() {
 }
 
 function atEnd(){
+    let message = '';
     switch(score){
         case 0:
             message = 'Gursahib is that you?';
             break;
         case 1:
-            message = 'A fucking rock is smarter than you.';
+            message = 'A rock is smarter than you.';
             break;
         case 2:
             message = 'An amoeba outcompetes you in terms of IQ.';
@@ -142,7 +149,7 @@ function atEnd(){
             message = 'Disappointment to humanity.';
             break;
         case 4:
-            message = 'Suicide is advised.';
+            message = 'Consider rethinking life choices.';
             break;
         case 5:
             message = 'Your prefrontal cortex is missing.';
@@ -189,3 +196,6 @@ document.getElementById('quiz-form').addEventListener('submit', function(event) 
         checkAnswer();
     }
 });
+
+// Preload images on window load
+window.onload = preloadImages;
