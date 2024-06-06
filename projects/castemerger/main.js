@@ -63,7 +63,7 @@ Render.run(render);
 
 
 (function run() {
-  const fixedDeltaTime = 1000 / 120; 
+  const fixedDeltaTime = 1000 / 60; 
   
   Engine.update(engine, fixedDeltaTime); 
   
@@ -284,7 +284,6 @@ Render.run(render);
   }
   
   
-  // 오른쪽 클릭 시 기본적으로 표시되는 컨텍스트 메뉴를 방지하기 위한 리스너입니다.
   document.addEventListener('contextmenu', function(event) {
     event.preventDefault();
   }, false);
