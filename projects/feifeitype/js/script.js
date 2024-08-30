@@ -75,7 +75,7 @@ function initTimer() {
     }
     if(timeLeft === 0) {
         clearInterval(timer);
-        timeTagElem.style.color = "#FF0000";
+        timeTagElem.classList.add("flash-infinite");
     }
 }
 
