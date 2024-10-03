@@ -1,1 +1,1 @@
-[juniorn.netlify.app](juniorn.netlify.app)
+[https://juniorn.netlify.app](https://juniorn.netlify.app)
