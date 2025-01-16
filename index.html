@@ -1,151 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>장준현</title>
+    <title>장준현</title>
 
+    <link rel="stylesheet" type="text/css" href="CSS/icons.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/taskbar.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/windows.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/clock.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/scrollbar.css" />
 
-		<link rel="stylesheet" type="text/css" href="CSS/icons.css" />
-		<link rel="stylesheet" type="text/css" href="CSS/taskbar.css" />
-		<link rel="stylesheet" type="text/css" href="CSS/windows.css" />
-		<link rel="stylesheet" type="text/css" href="CSS/clock.css" />
-		<link rel="stylesheet" type="text/css" href="CSS/scrollbar.css" />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
 
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 
-
-		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-		
-		
-		<script src="script.js"></script>
-
-	
-
-	</head>
-<body>
-	<div id="preload-container" style="display: none;"></div>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div id="preload-container" style="display: none"></div>
     <div id="desktop">
-
-		<div class="container">
-			<div class="clock">
-				<div id="day"></div>
-				<div class="wrapper">
-					<div id="time"></div>
-					<div id="midday"></div>
-				</div>
-			</div>
-		</div>
-
-        <div class="window closed" data-title="Welcome.txt">
-            <h1>장준현 - Joonhyun</h1>
-            <br>
-            <p>Welcome.</p>
-            <br>
-            <p>HTML/CSS/JS based stuff</p>
-            <br>
-            <p>https://github.com/nokcha0</p>
-            <br>
-            <hr />
-            <p>Created on January 19th, 2024.</p>
+      <div class="container">
+        <div class="clock">
+          <div id="day"></div>
+          <div class="wrapper">
+            <div id="time"></div>
+            <div id="midday"></div>
+          </div>
         </div>
+      </div>
 
-		<div class="window closed" data-title="Log.txt">
-			<br>
-			<p>2024</p>
-			<hr />
-			<p>01/19 Website v1. Project Intelligence Test </p>
-			<p>01/21 Project Nigunba EncDec. Added ChangeBg</p>
-			<p>02/11 Project Click Race </p>
-			<p>02/16 Project Feifei Type </p>
-			<p>02/22 Website v2. Project 타자변환. </p>
-			<p>02/24 Website v3. Added Log. Added Clock. Added Back Button for all proj.</p>
-			<p>02/27 Project TTS. Project RaceAI prototype. </p>
-			<p>02/28 Project ColorBlind Test. Netlify connected to Github </p>
-			<p>02/29 Website v4. Added Project Slides.</p>
-			<p>03/01 Project CasteMerger. Improved leaderboard functionalities (ClickRace excluded)</p>
-			<p>03/08 Project PerfectPitchTest</p>
-			<p>03/16 Project MassImgConvert</p>
-			<p>03/17 Fixed CasteMerger Game End Logic. Added Hardmode for PerfectPitchTest.</p>
-			<p>03/18 Project PrecisionTest. (implemented leaderboard.js) Added Scrollbar to windows</p>
-			<p>03/20 Project GeographyTest - Location.</p>
-			<p>03/26 Project GeographyTest - Flag.</p>
-			<p>05/31 Project PerfectPitchTest. Fixed weird notes</p>
-			<p>06/06 Added Image preloading for Project/Utiliy slides and Intelligence Test. Improved Format for Intelligence Test. index.html clock non-draggable. Preload BG</p>
-			<p>06/20 GitHub Issue Resolved, added bg.</p>
-			<p>08/29 Small Tweaks</p>
+      <div class="window closed" data-title="Welcome.txt">
+        <h1>장준현 - Joonhyun</h1>
+        <br />
+        <p>Welcome.</p>
+        <br />
+        <p>HTML/CSS/JS based stuff</p>
+        <br />
+        <p>https://github.com/nokcha0</p>
+        <br />
+        <hr />
+        <p>Created on January 19th, 2024.</p>
+      </div>
 
+      <div class="window closed" data-title="Log.txt">
+        <br />
+        <p>2024</p>
+        <hr />
+        <p>01/19 Website v1. Project Intelligence Test</p>
+        <p>01/21 Project Nigunba EncDec. Added ChangeBg</p>
+        <p>02/11 Project Click Race</p>
+        <p>02/16 Project Feifei Type</p>
+        <p>02/22 Website v2. Project 타자변환.</p>
+        <p>
+          02/24 Website v3. Added Log. Added Clock. Added Back Button for all
+          proj.
+        </p>
+        <p>02/27 Project TTS. Project RaceAI prototype.</p>
+        <p>02/28 Project ColorBlind Test. Netlify connected to Github</p>
+        <p>02/29 Website v4. Added Project Slides.</p>
+        <p>
+          03/01 Project CasteMerger. Improved leaderboard functionalities
+          (ClickRace excluded)
+        </p>
+        <p>03/08 Project PerfectPitchTest</p>
+        <p>03/16 Project MassImgConvert</p>
+        <p>
+          03/17 Fixed CasteMerger Game End Logic. Added Hardmode for
+          PerfectPitchTest.
+        </p>
+        <p>
+          03/18 Project PrecisionTest. (implemented leaderboard.js) Added
+          Scrollbar to windows
+        </p>
+        <p>03/20 Project GeographyTest - Location.</p>
+        <p>03/26 Project GeographyTest - Flag.</p>
+        <p>05/31 Project PerfectPitchTest. Fixed weird notes</p>
+        <p>
+          06/06 Added Image preloading for Project/Utiliy slides and
+          Intelligence Test. Improved Format for Intelligence Test. index.html
+          clock non-draggable. Preload BG
+        </p>
+        <p>06/20 GitHub Issue Resolved, added bg.</p>
+        <p>08/29 Small Tweaks</p>
 
-		</div>
+        <p>2025</p>
+        <hr />
+        <p>01/16 Sanitized Usernames for Leaderboards</p>
+      </div>
 
-		<!-- <div class="window closed" data-title="RaceAI">
+      <!-- <div class="window closed" data-title="RaceAI">
 			<br>
 			<a href="Projects/RaceAI/RaceAI.html">RaceAI</a> <br><br>
 			<p>AI for race recognition. Prototype, not enough database to train AI</p>
 			<hr />
 			<p>Feb 27 2024</p>
 		</div> -->
-		
-		<div id="taskbar">		
-		</div>
-		
-		<div class="icons">
-			<div class="icon">
-				<a class="openWindow" data-id="0">
-					<img src="bg/icons/file.png"> 
-					<span>Welcome</span>
-				</a>
-			</div>
 
-			<div class="icon">
-				<a class="openWindow" data-id="1">
-					<img src="bg/icons/file.png">
-					<span>Log File</span>
-				</a>
-			</div>
-			
-			<div class="icon">
-				<a id="changeBg">
-					<img src="bg/icons/random.png">
-					<span>Change Background</span>
-				</a>
-			</div>
+      <div id="taskbar"></div>
 
-			<div class="icon">
-			</div>
+      <div class="icons">
+        <div class="icon">
+          <a class="openWindow" data-id="0">
+            <img src="bg/icons/file.png" />
+            <span>Welcome</span>
+          </a>
+        </div>
 
-			<!-- <div class="icon">
+        <div class="icon">
+          <a class="openWindow" data-id="1">
+            <img src="bg/icons/file.png" />
+            <span>Log File</span>
+          </a>
+        </div>
+
+        <div class="icon">
+          <a id="changeBg">
+            <img src="bg/icons/random.png" />
+            <span>Change Background</span>
+          </a>
+        </div>
+
+        <div class="icon"></div>
+
+        <!-- <div class="icon">
 				<a class="openWindow" data-id="2">
 					<img src="bg/icons/proj.png">
 					<span>RaceAI</span>
 				</a>
 			</div> -->
 
-			<div class="icon">
-				<a href="/projects/projectslide/project.html" style="text-decoration:none;">
-					<img src="bg/icons/proj.png">
-					<span>Game Projects</span>
-				</a>
-			</div>
+        <div class="icon">
+          <a
+            href="/projects/projectslide/project.html"
+            style="text-decoration: none"
+          >
+            <img src="bg/icons/proj.png" />
+            <span>Game Projects</span>
+          </a>
+        </div>
 
-			<div class="icon">
-				<a href="/projects/utilityslide/utility.html" style="text-decoration:none;">
-					<img src="bg/icons/proj.png">
-					<span>Utility Projects</span>
-				</a>
-			</div>
-
-		</div>
-
-	</div>
-	<div id="preload-container" style="display: none;"></div>
-</body>
-
+        <div class="icon">
+          <a
+            href="/projects/utilityslide/utility.html"
+            style="text-decoration: none"
+          >
+            <img src="bg/icons/proj.png" />
+            <span>Utility Projects</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="preload-container" style="display: none"></div>
+  </body>
 </html>
-

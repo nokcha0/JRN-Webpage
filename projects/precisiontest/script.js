@@ -1,6 +1,21 @@
 "use strict";
 console.clear();
 
+const firebaseConfig = {
+  apiKey: "AIzaSyD6S_GuVYGfJ19spSj2KG7DMWeANdlrS3s",
+  authDomain: "precisiontest-16808.firebaseapp.com",
+  projectId: "precisiontest-16808",
+  storageBucket: "precisiontest-16808.appspot.com",
+  messagingSenderId: "551111638716",
+  appId: "1:551111638716:web:48deb9ca0b6fada7969ab9",
+};
+
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+const db = firebase.firestore();
+
+let isScoreSubmitted = false;
+
 let gameOver = false;
 let score = 0;
 
@@ -266,14 +281,14 @@ class Game {
     //   if (e.keyCode == 32) this.onAction();
     // });
     document.addEventListener("click", (e) => {
-      let targetElement = e.target; 
+      let targetElement = e.target;
       while (targetElement != null) {
         if (targetElement.classList.contains("game-ready")) {
           console.log("Game-ready area clicked");
           this.onAction();
-          break; 
+          break;
         }
-        targetElement = targetElement.parentElement; 
+        targetElement = targetElement.parentElement;
       }
     });
     document.addEventListener("touchstart", (e) => {
@@ -308,12 +323,14 @@ class Game {
   }
   restartGame() {
     closeLeaderboard();
-    gameOver = false;
-    console.log("restart: gameOver ", gameOver)
+    gameOver = false; // Reset gameOver here
+    console.log("restart: gameOver reset to", gameOver);
     this.updateState(this.STATES.RESETTING);
+
     let oldBlocks = this.placedBlocks.children;
     let removeSpeed = 0.2;
     let delayAmount = 0.02;
+
     for (let i = 0; i < oldBlocks.length; i++) {
       TweenLite.to(oldBlocks[i].scale, removeSpeed, {
         x: 0,
@@ -329,8 +346,11 @@ class Game {
         ease: Power1.easeIn,
       });
     }
+
     let cameraMoveSpeed = removeSpeed * 2 + oldBlocks.length * delayAmount;
+
     this.stage.setCamera(2, cameraMoveSpeed);
+
     let countdown = { value: this.blocks.length - 1 };
     TweenLite.to(countdown, cameraMoveSpeed, {
       value: 0,
@@ -338,11 +358,14 @@ class Game {
         this.scoreContainer.innerHTML = String(Math.round(countdown.value));
       },
     });
+
     this.blocks = this.blocks.slice(0, 1);
+
     setTimeout(() => {
       this.startGame();
     }, cameraMoveSpeed * 1000);
   }
+
   placeBlock() {
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
@@ -393,18 +416,18 @@ class Game {
     this.newBlocks.add(newKidOnTheBlock.mesh);
     this.blocks.push(newKidOnTheBlock);
     this.stage.setCamera(this.blocks.length * 2);
-    if(this.instructions) {
+    if (this.instructions) {
       if (this.blocks.length >= 5) {
-        this.instructions.classList.add("hide"); 
+        this.instructions.classList.add("hide");
       }
     }
   }
   endGame() {
     this.updateState(this.STATES.ENDED);
     gameOver = true;
-    console.log("Game Over: ", gameOver)
+    console.log("Game Over: ", gameOver);
     score = this.scoreContainer.innerHTML;
-    displayLeaderboard()
+    displayLeaderboard();
   }
   tick() {
     this.blocks[this.blocks.length - 1].tick();
@@ -415,3 +438,163 @@ class Game {
   }
 }
 let game = new Game();
+
+//LEADERBOARD -----------------------------------------------------------------
+
+// Helper function to sanitize user input
+function sanitizeInput(input) {
+  const div = document.createElement("div");
+  div.innerText = input.trim(); // Encode HTML entities and trim spaces
+  return div.innerHTML;
+}
+
+// Helper function to escape HTML for display
+function escapeHTML(content) {
+  return content.replace(/[&<>"'/]/g, (match) => {
+    const escapeMap = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+      "/": "&#x2F;",
+    };
+    return escapeMap[match];
+  });
+}
+
+function updateLeaderboard(gameOver, isScoreSubmitted, score) {
+  if (!gameOver) {
+    alert("Finish the game first");
+    return;
+  }
+
+  if (isScoreSubmitted) {
+    alert("Already submitted");
+    return;
+  }
+
+  const leaderboardCollection = db.collection("leaderboard");
+
+  const usernameInput = document.getElementById("username");
+  const rawUsername = usernameInput.value;
+
+  // Sanitize the username
+  const username = sanitizeInput(rawUsername);
+
+  if (!username) {
+    alert("Enter a valid username.");
+    return;
+  }
+
+  leaderboardCollection
+    .orderBy("score", "desc")
+    .limit(20)
+    .get()
+    .then((snapshot) => {
+      const leaderboard = snapshot.docs.map((doc) => doc.data());
+      if (leaderboard.length < 20 || score > leaderboard[19].score) {
+        const existingUser = leaderboard.find(
+          (user) => user.username === username
+        );
+
+        if (existingUser) {
+          if (score > existingUser.score) {
+            const docId = snapshot.docs.find(
+              (doc) => doc.data().username === username
+            ).id;
+
+            leaderboardCollection.doc(docId).update({ score });
+            alert("Your record has been updated");
+            displayLeaderboard();
+          } else {
+            alert("You already have a better record");
+          }
+        } else {
+          leaderboardCollection.add({ username, score }).then(() => {
+            leaderboardCollection
+              .orderBy("score", "desc")
+              .limit(20)
+              .get()
+              .then((updatedSnapshot) => {
+                const updatedLeaderboard = updatedSnapshot.docs.map((doc) =>
+                  doc.data()
+                );
+                const rank =
+                  updatedLeaderboard.findIndex(
+                    (user) => user.username === username
+                  ) + 1;
+                alert(`Score submitted! Your rank: ${rank}`);
+                displayLeaderboard();
+              });
+          });
+        }
+
+        usernameInput.value = ""; // Clear the input after submission
+        isScoreSubmitted = true;
+      } else {
+        alert("Not worth listing on the leaderboard.");
+      }
+    });
+}
+
+function displayLeaderboard() {
+  const leaderboardCollection = db.collection("leaderboard");
+  const leaderboardList = document.getElementById("leaderboard-list");
+  const leaderboard = document.getElementById("leaderboard");
+  const leaderboardButton = document.getElementById("open-leaderboard");
+
+  leaderboardButton.style.visibility = "hidden";
+  leaderboard.classList.add("active");
+
+  leaderboardCollection
+    .orderBy("score", "desc")
+    .limit(20)
+    .get()
+    .then((snapshot) => {
+      const leaderboard = snapshot.docs.map((doc) => doc.data());
+      leaderboardList.innerHTML = "";
+
+      leaderboard.forEach((entry, index) => {
+        // Escape usernames and scores before displaying them
+        leaderboardList.innerHTML += `<li>${index + 1}. ${escapeHTML(
+          entry.username
+        )}: ${escapeHTML(entry.score.toString())}</li>`;
+      });
+    });
+}
+
+function closeLeaderboard() {
+  const leaderboard = document.getElementById("leaderboard");
+  const leaderboardButton = document.getElementById("open-leaderboard");
+  leaderboard.classList.remove("active");
+  leaderboardButton.style.visibility = "visible";
+}
+
+window.onload = function () {
+  displayLeaderboard();
+
+  const leaderboard = document.getElementById("leaderboard");
+  const leaderboardButton = document.getElementById("open-leaderboard");
+  const closeLeaderboard = document.getElementsByClassName("close-btn")[0];
+  const submitButton = document.getElementById("submit-username");
+
+  leaderboard.classList.remove("active");
+  leaderboardButton.style.visibility = "visible";
+
+  leaderboardButton.addEventListener("click", function () {
+    leaderboard.classList.add("active");
+    leaderboardButton.style.visibility = "hidden";
+  });
+
+  closeLeaderboard.addEventListener("click", function () {
+    leaderboard.classList.remove("active");
+    leaderboardButton.style.visibility = "visible";
+  });
+
+  submitButton.addEventListener("click", function () {
+    updateLeaderboard(gameOver, isScoreSubmitted, score);
+  });
+};
+
+// -----------------------------------------------------------------

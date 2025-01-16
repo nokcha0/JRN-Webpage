@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Perfect Pitch Test</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="../../CSS/back.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../../CSS/back.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <a href="../projectslide/project.html" class="back-button"></a>
@@ -20,39 +23,37 @@
     <div class="timer"></div>
 
     <div class="menu-btn" id="open-leaderboard">
-        <i class="fas fa-bars"></i>
-      </div>      
+      <i class="fas fa-bars"></i>
+    </div>
 
     <div id="leaderboard" class="side-bar">
-        <div class="close-btn">
-          <i class="fas fa-times"></i>
-        </div>
-        <header>
-            <h1 id="leaderboard-title">Leaderboard</h1>
-        </header>
+      <div class="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <header>
+        <h1 id="leaderboard-title">Leaderboard</h1>
+      </header>
 
-        <div class="username-input">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" autocomplete="off">
-            <button id="submit-username">Submit</button>
-          </div>
+      <div class="username-input">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" autocomplete="off" />
+        <button id="submit-username">Submit</button>
+      </div>
 
-        <div class="menu">
-            <ul id="leaderboard-list"></ul>
-        </div>
-
-          
+      <div class="menu">
+        <ul id="leaderboard-list"></ul>
+      </div>
     </div>
 
     <div class="header-container">
-        <h1>PERFECT PITCH TEST</h1>
-        <p id="score" class="score">Score: 0</p>
+      <h1>PERFECT PITCH TEST</h1>
+      <p id="score" class="score">Score: 0</p>
     </div>
 
     <div class="wrapper">
       <header>
         <div class="column keys-checkbox">
-          <span>Show Notes</span><input type="checkbox" checked>
+          <span>Show Notes</span><input type="checkbox" checked />
         </div>
         <button id="hear-again">Hear Again</button>
       </header>
@@ -73,7 +74,13 @@
       <button id="start">Start <span id="timer"></span></button>
       <div class="checkbox-wrapper-10">
         <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
-        <label class="tgl-btn" data-tg-off="HardMode" data-tg-on="EasyMode" for="cb5" for="hardmodeCheckbox"></label>
+        <label
+          class="tgl-btn"
+          data-tg-off="HardMode"
+          data-tg-on="EasyMode"
+          for="cb5"
+          for="hardmodeCheckbox"
+        ></label>
       </div>
     </div>
     <script src="script.js"></script>
